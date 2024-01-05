@@ -1,0 +1,14 @@
+# IDE
+.idea/
+
+# 微信开发者工具个人私有配置（官方约定不入库）
+project.private.config.json
+
+# 本地私有环境配置（含真实云环境 ID，严禁提交）
+config/env.local.js
+
+# 依赖与系统文件
+node_modules/
+.DS_Store
+Thumbs.db
+*.log

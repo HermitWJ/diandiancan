@@ -1,0 +1,69 @@
+{
+  "pages": [
+    "pages/my/login/login",
+    "pages/index/index",
+    "pages/cart/cart",
+    "pages/my/my",
+    "pages/my/suggest/suggest",
+    "pages/shop/shop",
+    "pages/index/canteen/canteen",
+    "pages/cart/evaluation/evaluation",
+    "pages/cart/aftersales/aftersales",
+    "pages/index/detail/detail",
+    "pages/index/search/search",
+    "pages/index/GoodsDetails/GoodsDetails",
+    "pages/my/register/register",
+    "pages/my/setup/setup",
+    "pages/my/register1/register1",
+    "pages/my/forget/forget",
+    "pages/my/forget/mibao/mibao",
+    "pages/my/forget/re-password/re-password",
+    "pages/Cook/Cook",
+    "pages/Cook/guanli/guanli",
+    "pages/my/coupon/coupon",
+    "pages/my/idea/idea",
+    "pages/my/customerservice/customerservice",
+    "pages/my/mycoupon/mycoupon",
+    "pages/my/collect/collect",
+    "pages/my/randomeat1/randomeat1",
+    "pages/index/settlement/settlement",
+    "pages/index/settlement/remark/remark"
+  ],
+  "window": {
+    "navigationBarTextStyle": "black",
+    "navigationBarTitleText": "西安理工大学预点餐系统（曲江校区）",
+    "navigationBarBackgroundColor": "#ffffff",
+    "backgroundColor": "#dbdbdb",
+    "backgroundTextStyle": "dark",
+    "onReachBottomDistance": 50
+  },
+  "style": "v2",
+  "componentFramework": "glass-easel",
+  "sitemapLocation": "sitemap.json",
+  "lazyCodeLoading": "requiredComponents",
+  "tabBar": {
+    "selectedColor": "#000000",
+    "borderStyle": "white",
+    "position": "bottom",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "text": "首页",
+        "iconPath": "/images/home_no.png",
+        "selectedIconPath": "/images/home_yes.png"
+      },
+      {
+        "pagePath": "pages/cart/cart",
+        "text": "订单",
+        "iconPath": "/images/list_no.png",
+        "selectedIconPath": "/images/list_yes.png"
+      },
+      {
+        "pagePath": "pages/my/my",
+        "text": "我的",
+        "iconPath": "/images/my_no.png",
+        "selectedIconPath": "/images/my_yes.png"
+      }
+    ]
+  }
+}
