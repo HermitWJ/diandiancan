@@ -1,0 +1,11 @@
+//此工具用于将金额（number），转化为固定小数点后两位存在的数字（例如：15 -> 15.00）
+function toFixedString(number) {
+    if (number === undefined) {
+        return "0.00"
+    }
+    return number.toFixed(2)
+}
+
+module.exports = {
+    toFixedString: toFixedString
+}

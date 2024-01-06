@@ -1,0 +1,30 @@
+// 此函数负责将电话号码格式化
+function splitPhone(str) {
+    if(str.length !== 11)
+    return str
+    // 使用str.split进行切割字符串
+    var array =str.split('')
+//小知识：splice有3个参数， splice(index,len,[item])
+// 其中，index:数组开始下标 len: 替换/删除的长度 item:替换的值，删除操作的话 item为空
+// splice作用：删除元素/插入元素/替换元素，该方法会改变原始数组
+// el：arr = [‘1’,‘2’,‘3’,‘4’]
+// 作用1：删除元素 — [item]为0
+// arr.splice(1,1) //[‘1’,‘3’,‘4’]
+// arr.splice(1,0) //[‘1’,‘2’,‘3’,‘4’]
+// arr.splice(1,2) //[‘1’,‘4’]
+// 作用2：替换元素 — item为替换的值
+// arr.splice(1,1,‘x’) //[‘1’,‘x’,‘3’,‘4’] 替换起始下标为1，长度为1的值为‘x’
+// arr.splice(1,2,‘y’) //[‘1’,‘y’’,‘4’] 替换起始下标为1，长度为2的两个值为‘y’
+// arr.splice(1,2,‘x’,‘y’) //[‘1’,‘x’,‘y’,‘4’] 替换起始下标为1，长度为2的两个值
+// 作用3：插入元素 — len设置为0，item为添加的值
+// arr.splice(1,0,‘x’) //[‘1’,‘x’,‘2’,‘3’,‘4’]
+// arr.splice(1,0, ‘x’, ‘y’, ‘z’) //[‘1’,‘x’, ‘y’, ‘z’,‘2’,‘3’,‘4’]
+    array.splice(3,0,'-')
+    array.splice(8,0,'-')
+    //用join进行拼接
+    return array.join('')
+}
+// 用此方法向外共享成员对象
+module.exports = {
+    splitPhone: splitPhone
+}
