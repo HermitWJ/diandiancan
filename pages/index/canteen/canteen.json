@@ -1,0 +1,7 @@
+{
+  "usingComponents": {
+    "sidebar": "../../../components/sidebar/index"
+  },
+  "enablePullDownRefresh": true,
+  "backgroundColor": "#f5f5f5"
+}

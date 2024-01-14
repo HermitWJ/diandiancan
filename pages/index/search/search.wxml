@@ -1,0 +1,113 @@
+<!-- 搜索美食页面 - 精美设计 -->
+<wxs src="../../../utils/num_str.wxs" module="num_str"/>
+
+<view class="search-page">
+
+  <!-- 顶部搜索栏 -->
+  <view class="search-header">
+    <view class="search-bar">
+      <text class="search-bar-icon">🔍</text>
+      <input
+        type="text"
+        placeholder="搜索你想吃的美食..."
+        value="{{inputValue}}"
+        bindinput="onInput"
+        bindconfirm="onConfirmSearch"
+        confirm-type="search"
+        focus="{{true}}"
+        class="search-input"
+      />
+      <view class="search-clear" wx:if="{{inputValue}}" bindtap="clearInput">✕</view>
+    </view>
+    <view class="search-action" bindtap="onConfirmSearch">
+      <text>搜索</text>
+    </view>
+  </view>
+
+  <!-- 搜索发现区域（无搜索结果时显示） -->
+  <view class="discover-section" wx:if="{{!showResult}}">
+
+    <!-- 热门搜索 -->
+    <view class="discover-block">
+      <view class="discover-title-row">
+        <text class="discover-title">🔥 热门搜索</text>
+      </view>
+      <view class="tag-cloud">
+        <view class="tag-item hot-tag" wx:for="{{hotKeywords}}" wx:key="*this" bindtap="onTagTap" data-keyword="{{item}}">
+          <text class="hot-rank" wx:if="{{index < 3}}">{{index + 1}}</text>
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 搜索历史 -->
+    <view class="discover-block" wx:if="{{searchHistory.length > 0}}">
+      <view class="discover-title-row">
+        <text class="discover-title">⏳ 搜索历史</text>
+        <view class="clear-history" bindtap="clearHistory">
+          <text>清空</text>
+        </view>
+      </view>
+      <view class="tag-cloud">
+        <view class="tag-item history-tag" wx:for="{{searchHistory}}" wx:key="*this" bindtap="onTagTap" data-keyword="{{item}}">
+          <text>{{item}}</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 温馨提示 -->
+    <view class="search-tip-area">
+      <text class="tip-emoji">🍽️</text>
+      <text class="tip-text">输入菜品名称即可实时搜索</text>
+      <text class="tip-sub">支持模糊搜索，如「麻辣」「牛肉」等</text>
+    </view>
+  </view>
+
+  <!-- 搜索结果区域 -->
+  <view class="result-section" wx:if="{{showResult}}">
+
+    <!-- 加载中 -->
+    <view class="loading-state" wx:if="{{isSearching}}">
+      <view class="loading-spinner"></view>
+      <text class="loading-text">正在搜索中...</text>
+    </view>
+
+    <!-- 搜索结果统计 -->
+    <view class="result-summary" wx:if="{{!isSearching && goods.length > 0}}">
+      <text class="result-count">找到 <text class="count-highlight">{{goods.length}}</text> 个相关菜品</text>
+    </view>
+
+    <!-- 搜索结果列表 -->
+    <view class="result-list" wx:if="{{!isSearching && goods.length > 0}}">
+      <view class="result-card" wx:for="{{goods}}" wx:key="_id" bindtap="toDetails" data-id="{{item._id}}">
+        <view class="result-img-wrap">
+          <image src="{{item.cover}}" mode="aspectFill" class="result-img" />
+          <view class="result-store-tag" wx:if="{{item.StoreName}}">
+            <text>{{item.StoreName}}</text>
+          </view>
+        </view>
+        <view class="result-info">
+          <text class="result-name">{{item.dishname}}</text>
+          <text class="result-desc">{{item.details || '暂无描述'}}</text>
+          <view class="result-bottom-row">
+            <view class="result-price">
+              <text class="price-symbol">¥</text>
+              <text class="price-num">{{num_str.toFixedString(item.price)}}</text>
+            </view>
+            <view class="result-action">
+              <text class="action-text">查看详情 ›</text>
+            </view>
+          </view>
+        </view>
+      </view>
+    </view>
+
+    <!-- 无结果 -->
+    <view class="empty-result" wx:if="{{!isSearching && goods.length === 0}}">
+      <text class="empty-emoji">🔍</text>
+      <text class="empty-title">未找到相关菜品</text>
+      <text class="empty-sub">换个关键词试试吧~</text>
+    </view>
+  </view>
+
+</view>

@@ -1,0 +1,187 @@
+<!-- 顶部问候区域 -->
+<view class="greeting-section">
+    <view class="greeting-left">
+        <text class="greeting-text">{{greetingText}}</text>
+        <text class="greeting-sub">今天想吃点什么？</text>
+    </view>
+    <view class="greeting-right" bindtap="goToMy">
+        <image class="avatar-img" src="{{user.avatarUrl?user.avatarUrl:'/images/ava.png'}}" mode="aspectFill"></image>
+    </view>
+</view>
+
+<!-- 搜索框 -->
+<view bindtap="toSearch" class="search-item">
+    <view class="search-icon-wrap">
+        <image src="/images/search.png" class="search-img"></image>
+    </view>
+    <input type="text" placeholder="搜索你想吃的美食..." disabled class="search-box" />
+</view>
+
+<!-- 滚动公告栏 -->
+<view class="notice-bar" wx:if="{{noticeList.length > 0}}">
+    <view class="notice-icon">📢</view>
+    <swiper class="notice-swiper" vertical autoplay circular interval="3000" duration="500">
+        <swiper-item wx:for="{{noticeList}}" wx:key="index">
+            <text class="notice-text">{{item}}</text>
+        </swiper-item>
+    </swiper>
+</view>
+
+<!-- 轮播图 -->
+<view class="banner-section">
+    <swiper class="swiper-item" indicator-dots indicator-color="rgba(255,255,255,0.4)" indicator-active-color="#ffffff" autoplay circular interval="3000" duration="600" previous-margin="24rpx" next-margin="24rpx">
+        <block wx:for="{{slideshow}}" wx:key="id">
+            <swiper-item>
+                <view class="swiper-img-wrap">
+                    <image bindtap="toDetail" data-id="{{item._id}}" src="{{item.cover}}" class="swiper-img" mode="aspectFill"></image>
+                </view>
+            </swiper-item>
+        </block>
+    </swiper>
+</view>
+
+<!-- 快捷功能入口 -->
+<view class="quick-entry-section">
+    <view class="quick-entry-item" bindtap="goToRandomEat">
+        <view class="quick-icon-bg" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53);">
+            <text class="quick-icon-emoji">🎲</text>
+        </view>
+        <text class="quick-entry-text">随机吃啥</text>
+    </view>
+    <view class="quick-entry-item" bindtap="goToCoupon">
+        <view class="quick-icon-bg" style="background: linear-gradient(135deg, #4FACFE, #00F2FE);">
+            <text class="quick-icon-emoji">🎫</text>
+        </view>
+        <text class="quick-entry-text">优惠券</text>
+    </view>
+    <view class="quick-entry-item" bindtap="goToCollect">
+        <view class="quick-icon-bg" style="background: linear-gradient(135deg, #FA709A, #FEE140);">
+            <text class="quick-icon-emoji">❤️</text>
+        </view>
+        <text class="quick-entry-text">我的收藏</text>
+    </view>
+    <view class="quick-entry-item" bindtap="goToOrder">
+        <view class="quick-icon-bg" style="background: linear-gradient(135deg, #A18CD1, #FBC2EB);">
+            <text class="quick-icon-emoji">📋</text>
+        </view>
+        <text class="quick-entry-text">我的订单</text>
+    </view>
+</view>
+
+<!-- 选择餐厅 -->
+<view class="section-header">
+    <view class="section-title-wrap">
+        <view class="section-dot"></view>
+        <text class="section-title">选择餐厅</text>
+    </view>
+    <text class="section-subtitle">共{{resList.length}}个餐厅为您服务</text>
+</view>
+<view class="restaurant-item">
+    <navigator class="res-item" wx:for="{{resList}}" wx:key="id" url="/pages/index/canteen/canteen?id={{item.id}}&title={{item.name}}">
+        <view class="res-item-inner">
+            <image src="{{item.image}}" mode="aspectFill" />
+            <text class="res-name">{{item.name}}</text>
+            <text class="res-desc">{{item.desc}}</text>
+        </view>
+    </navigator>
+</view>
+
+<!-- 促销活动横幅 -->
+<view class="promo-section">
+    <view class="promo-card promo-left" bindtap="goToCoupon">
+        <view class="promo-info">
+            <text class="promo-tag">限时优惠</text>
+            <text class="promo-title">新用户专享</text>
+            <text class="promo-desc">首单立减5元</text>
+        </view>
+        <text class="promo-emoji">🎉</text>
+    </view>
+    <view class="promo-card promo-right" bindtap="goToRandomEat">
+        <view class="promo-info">
+            <text class="promo-tag">趣味功能</text>
+            <text class="promo-title">今天吃什么</text>
+            <text class="promo-desc">随机帮你选</text>
+        </view>
+        <text class="promo-emoji">🍜</text>
+    </view>
+</view>
+
+<!-- 今日推荐 -->
+<view class="section-header">
+    <view class="section-title-wrap">
+        <view class="section-dot" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53);"></view>
+        <text class="section-title">今日推荐</text>
+    </view>
+    <text class="section-more" bindtap="toSearch">查看更多></text>
+</view>
+<scroll-view class="recommend-scroll" scroll-x enhanced show-scrollbar="{{false}}">
+    <view class="recommend-list">
+        <view class="recommend-card" wx:for="{{recommendList}}" wx:key="index" bindtap="toDetail" data-id="{{item._id}}">
+            <image class="recommend-img" src="{{item.cover}}" mode="aspectFill"></image>
+            <view class="recommend-info">
+                <text class="recommend-name">{{item.name}}</text>
+                <view class="recommend-bottom">
+                    <text class="recommend-price">¥{{item.price}}</text>
+                    <view class="recommend-tag-wrap">
+                        <text class="recommend-tag">👍 推荐</text>
+                    </view>
+                </view>
+            </view>
+        </view>
+    </view>
+</scroll-view>
+
+<!-- 热门排行 -->
+<view class="section-header">
+    <view class="section-title-wrap">
+        <view class="section-dot" style="background: linear-gradient(135deg, #FA709A, #FEE140);"></view>
+        <text class="section-title">🔥 人气排行</text>
+    </view>
+</view>
+<view class="ranking-section">
+    <view class="ranking-card" wx:for="{{rankingList}}" wx:key="index" bindtap="toDetail" data-id="{{item._id}}">
+        <view class="ranking-index rank-{{index + 1}}">{{index + 1}}</view>
+        <image class="ranking-img" src="{{item.cover}}" mode="aspectFill"></image>
+        <view class="ranking-info">
+            <text class="ranking-name">{{item.name}}</text>
+            <text class="ranking-restaurant">{{item.restaurant}}</text>
+            <view class="ranking-bottom">
+                <text class="ranking-price">¥{{item.price}}</text>
+                <text class="ranking-sales">月售{{item.sales}}份</text>
+            </view>
+        </view>
+    </view>
+</view>
+
+<!-- 底部安全间距 -->
+<view class="bottom-safe"></view>
+
+<!-- 公告背景 -->
+<view class="background" wx:if="{{showBack==true}}" bindtap="close"></view>
+<!-- 公告内容 -->
+<view class="content" wx:if="{{showBack==true}}">
+    <scroll-view class="scroll-item" scroll-y="true" style="height: 100%;">
+        <view class="content-item">
+            <text class="modal-title">使用须知</text>
+            <view class="notice-content-list">
+                <view class="notice-content-item">
+                    <text class="notice-num">1</text>
+                    <text class="info">本系统为西安理工大学曲江校区预点餐平台，仅供校内师生使用。</text>
+                </view>
+                <view class="notice-content-item">
+                    <text class="notice-num">2</text>
+                    <text class="info">请提前30分钟下单，以便餐厅准备。</text>
+                </view>
+                <view class="notice-content-item">
+                    <text class="notice-num">3</text>
+                    <text class="info">取餐时请出示订单号，到对应餐厅窗口取餐。</text>
+                </view>
+                <view class="notice-content-item">
+                    <text class="notice-num">4</text>
+                    <text class="info">如有问题请联系客服或在"意见反馈"中提交。</text>
+                </view>
+            </view>
+            <button class="close-btn" bindtap="close">我知道了</button>
+        </view>
+    </scroll-view>
+</view>

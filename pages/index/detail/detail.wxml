@@ -1,0 +1,319 @@
+<!-- 西安理工大学食堂图文介绍详情页 -->
+<view class="detail-page">
+  <!-- 顶部大图区域 -->
+  <view class="hero-section">
+    <image src="{{item.cover}}" mode="aspectFill" class="hero-img" />
+    <view class="hero-overlay"></view>
+    <!-- 返回按钮 -->
+    <view class="back-btn" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <!-- 分享按钮 -->
+    <button class="share-btn" open-type="share">
+      <text class="share-icon">⤴</text>
+    </button>
+    <view class="hero-content">
+      <view class="hero-badge">🏫 西安理工大学</view>
+      <text class="hero-title">{{item.title || '食堂美食攻略'}}</text>
+      <text class="hero-subtitle">用心烹饪每一餐 · 温暖每一位学子</text>
+    </view>
+  </view>
+
+  <!-- 食堂概览统计 -->
+  <view class="stats-section">
+    <view class="stats-card">
+      <view class="stat-item">
+        <text class="stat-number">6</text>
+        <text class="stat-label">大食堂</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-number">200+</text>
+        <text class="stat-label">菜品种类</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-number">14h</text>
+        <text class="stat-label">每日营业</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item">
+        <text class="stat-number">5⭐</text>
+        <text class="stat-label">卫生评级</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 食堂亮点标签 -->
+  <view class="highlights-section">
+    <view class="section-header">
+      <view class="section-icon">✨</view>
+      <text class="section-title">食堂亮点</text>
+    </view>
+    <view class="highlights-grid">
+      <view class="highlight-item" style="background: linear-gradient(135deg, #fff5f5, #ffe8e8);">
+        <text class="highlight-emoji">🍜</text>
+        <text class="highlight-text">地道陕味</text>
+        <text class="highlight-desc">正宗biangbiang面</text>
+      </view>
+      <view class="highlight-item" style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe);">
+        <text class="highlight-emoji">💰</text>
+        <text class="highlight-text">学生价格</text>
+        <text class="highlight-desc">人均8-15元</text>
+      </view>
+      <view class="highlight-item" style="background: linear-gradient(135deg, #f0fdf4, #dcfce7);">
+        <text class="highlight-emoji">🥗</text>
+        <text class="highlight-text">营养均衡</text>
+        <text class="highlight-desc">荤素搭配合理</text>
+      </view>
+      <view class="highlight-item" style="background: linear-gradient(135deg, #fffbeb, #fef3c7);">
+        <text class="highlight-emoji">🧹</text>
+        <text class="highlight-text">干净卫生</text>
+        <text class="highlight-desc">明厨亮灶标准</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 各餐厅详细介绍 -->
+  <view class="canteen-section">
+    <view class="section-header">
+      <view class="section-icon">🍽️</view>
+      <text class="section-title">餐厅导览</text>
+    </view>
+
+    <!-- 第一餐厅 -->
+    <view class="canteen-card">
+      <view class="canteen-card-header">
+        <view class="canteen-number-badge" style="background: linear-gradient(135deg, #FF6B6B, #FF8E53);">1</view>
+        <view class="canteen-info">
+          <text class="canteen-name">第一餐厅</text>
+          <view class="canteen-tags">
+            <text class="canteen-tag">家常菜</text>
+            <text class="canteen-tag">面食</text>
+            <text class="canteen-tag">早餐</text>
+          </view>
+        </view>
+        <view class="canteen-rating">
+          <text class="rating-star">⭐</text>
+          <text class="rating-num">4.8</text>
+        </view>
+      </view>
+      <view class="canteen-card-body">
+        <text class="canteen-desc">位于校园中心地带，是历史最悠久的食堂。一楼提供各类家常菜、面食和早餐，物美价廉。二楼设有特色窗口，陕西凉皮、肉夹馍等地方特色应有尽有。</text>
+        <view class="canteen-features">
+          <view class="feature-tag">📍 教学主楼旁</view>
+          <view class="feature-tag">⏰ 6:30-21:00</view>
+          <view class="feature-tag">👥 可容纳800人</view>
+        </view>
+        <view class="hot-dishes">
+          <text class="hot-dishes-label">🔥 招牌推荐：</text>
+          <text class="hot-dishes-text">红烧大排 · 岐山臊子面 · 油泼面 · 肉夹馍</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 第二餐厅 -->
+    <view class="canteen-card">
+      <view class="canteen-card-header">
+        <view class="canteen-number-badge" style="background: linear-gradient(135deg, #4FACFE, #00F2FE);">2</view>
+        <view class="canteen-info">
+          <text class="canteen-name">第二餐厅</text>
+          <view class="canteen-tags">
+            <text class="canteen-tag">麻辣烫</text>
+            <text class="canteen-tag">炒菜</text>
+            <text class="canteen-tag">蛋包饭</text>
+          </view>
+        </view>
+        <view class="canteen-rating">
+          <text class="rating-star">⭐</text>
+          <text class="rating-num">4.9</text>
+        </view>
+      </view>
+      <view class="canteen-card-body">
+        <text class="canteen-desc">人气最旺的食堂，新装修后环境焕然一新。麻辣香锅窗口是全校最火爆的档口，蛋包饭更是同学们的心头好。用餐高峰期建议提前下单哦！</text>
+        <view class="canteen-features">
+          <view class="feature-tag">📍 学生公寓旁</view>
+          <view class="feature-tag">⏰ 7:00-21:30</view>
+          <view class="feature-tag">👥 可容纳1000人</view>
+        </view>
+        <view class="hot-dishes">
+          <text class="hot-dishes-label">🔥 招牌推荐：</text>
+          <text class="hot-dishes-text">麻辣香锅 · 鸡排蛋包饭 · 黄焖鸡 · 酸菜鱼</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 第三餐厅 -->
+    <view class="canteen-card">
+      <view class="canteen-card-header">
+        <view class="canteen-number-badge" style="background: linear-gradient(135deg, #A18CD1, #FBC2EB);">3</view>
+        <view class="canteen-info">
+          <text class="canteen-name">第三餐厅</text>
+          <view class="canteen-tags">
+            <text class="canteen-tag">快餐</text>
+            <text class="canteen-tag">盖饭</text>
+            <text class="canteen-tag">砂锅</text>
+          </view>
+        </view>
+        <view class="canteen-rating">
+          <text class="rating-star">⭐</text>
+          <text class="rating-num">4.7</text>
+        </view>
+      </view>
+      <view class="canteen-card-body">
+        <text class="canteen-desc">主打快捷便利，适合课间赶时间的同学。各种盖饭、炒饭出餐速度快，砂锅系列在冬天特别受欢迎。一楼还设有小卖部和水果摊位。</text>
+        <view class="canteen-features">
+          <view class="feature-tag">📍 图书馆对面</view>
+          <view class="feature-tag">⏰ 7:00-21:00</view>
+          <view class="feature-tag">👥 可容纳600人</view>
+        </view>
+        <view class="hot-dishes">
+          <text class="hot-dishes-label">🔥 招牌推荐：</text>
+          <text class="hot-dishes-text">台式卤肉饭 · 土豆牛肉砂锅 · 扬州炒饭 · 手工水饺</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 第四餐厅 -->
+    <view class="canteen-card">
+      <view class="canteen-card-header">
+        <view class="canteen-number-badge" style="background: linear-gradient(135deg, #FA709A, #FEE140);">4</view>
+        <view class="canteen-info">
+          <text class="canteen-name">第四餐厅</text>
+          <view class="canteen-tags">
+            <text class="canteen-tag">特色小吃</text>
+            <text class="canteen-tag">甜品</text>
+            <text class="canteen-tag">奶茶</text>
+          </view>
+        </view>
+        <view class="canteen-rating">
+          <text class="rating-star">⭐</text>
+          <text class="rating-num">4.6</text>
+        </view>
+      </view>
+      <view class="canteen-card-body">
+        <text class="canteen-desc">美食街风格的食堂，汇集了各地特色小吃。从重庆小面到武汉热干面，从煎饼果子到手抓饼，这里就是校园里的"美食天堂"。饭后还能来杯奶茶或甜品！</text>
+        <view class="canteen-features">
+          <view class="feature-tag">📍 体育馆附近</view>
+          <view class="feature-tag">⏰ 7:30-22:00</view>
+          <view class="feature-tag">👥 可容纳500人</view>
+        </view>
+        <view class="hot-dishes">
+          <text class="hot-dishes-label">🔥 招牌推荐：</text>
+          <text class="hot-dishes-text">重庆小面 · 煎饼果子 · 芒果西米露 · 烤冷面</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 第五餐厅 -->
+    <view class="canteen-card">
+      <view class="canteen-card-header">
+        <view class="canteen-number-badge" style="background: linear-gradient(135deg, #43E97B, #38F9D7);">5</view>
+        <view class="canteen-info">
+          <text class="canteen-name">第五餐厅</text>
+          <view class="canteen-tags">
+            <text class="canteen-tag">西餐</text>
+            <text class="canteen-tag">简餐</text>
+            <text class="canteen-tag">咖啡</text>
+          </view>
+        </view>
+        <view class="canteen-rating">
+          <text class="rating-star">⭐</text>
+          <text class="rating-num">4.8</text>
+        </view>
+      </view>
+      <view class="canteen-card-body">
+        <text class="canteen-desc">校园里的"小资情调"，装修风格现代简约。提供意面、牛排、沙拉等西式简餐，还有现磨咖啡和精致甜点。适合约会、聚餐或安静地享受一个人的用餐时光。</text>
+        <view class="canteen-features">
+          <view class="feature-tag">📍 创新大楼旁</view>
+          <view class="feature-tag">⏰ 8:00-21:30</view>
+          <view class="feature-tag">👥 可容纳300人</view>
+        </view>
+        <view class="hot-dishes">
+          <text class="hot-dishes-label">🔥 招牌推荐：</text>
+          <text class="hot-dishes-text">黑椒牛排 · 奶油意面 · 凯撒沙拉 · 拿铁咖啡</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 民族餐厅 -->
+    <view class="canteen-card">
+      <view class="canteen-card-header">
+        <view class="canteen-number-badge" style="background: linear-gradient(135deg, #667eea, #764ba2);">民</view>
+        <view class="canteen-info">
+          <text class="canteen-name">民族餐厅</text>
+          <view class="canteen-tags">
+            <text class="canteen-tag">清真</text>
+            <text class="canteen-tag">民族风味</text>
+            <text class="canteen-tag">牛羊肉</text>
+          </view>
+        </view>
+        <view class="canteen-rating">
+          <text class="rating-star">⭐</text>
+          <text class="rating-num">4.9</text>
+        </view>
+      </view>
+      <view class="canteen-card-body">
+        <text class="canteen-desc">专为少数民族同学和清真饮食需求的同学设立。这里的大盘鸡、手抓饭、羊肉泡馍都非常正宗，分量十足。也是体验西北风味美食的绝佳选择！</text>
+        <view class="canteen-features">
+          <view class="feature-tag">📍 西门附近</view>
+          <view class="feature-tag">⏰ 7:00-21:00</view>
+          <view class="feature-tag">👥 可容纳400人</view>
+        </view>
+        <view class="hot-dishes">
+          <text class="hot-dishes-label">🔥 招牌推荐：</text>
+          <text class="hot-dishes-text">新疆大盘鸡 · 羊肉泡馍 · 手抓饭 · 烤羊肉串</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 温馨小贴士 -->
+  <view class="tips-section">
+    <view class="section-header">
+      <view class="section-icon">💡</view>
+      <text class="section-title">用餐小贴士</text>
+    </view>
+    <view class="tips-card">
+      <view class="tip-item">
+        <view class="tip-num">01</view>
+        <view class="tip-content">
+          <text class="tip-title">错峰就餐更舒适</text>
+          <text class="tip-desc">建议避开11:30-12:30用餐高峰期，提前或推迟就餐体验更佳</text>
+        </view>
+      </view>
+      <view class="tip-item">
+        <view class="tip-num">02</view>
+        <view class="tip-content">
+          <text class="tip-title">小程序提前点餐</text>
+          <text class="tip-desc">使用本小程序提前下单，到店直接取餐，省时又省力</text>
+        </view>
+      </view>
+      <view class="tip-item">
+        <view class="tip-num">03</view>
+        <view class="tip-content">
+          <text class="tip-title">光盘行动一起来</text>
+          <text class="tip-desc">按需取餐，杜绝浪费，让每一粒粮食都不被辜负</text>
+        </view>
+      </view>
+      <view class="tip-item">
+        <view class="tip-num">04</view>
+        <view class="tip-content">
+          <text class="tip-title">餐具回收请自觉</text>
+          <text class="tip-desc">用餐完毕请将餐具放到指定回收处，共同维护用餐环境</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 底部区域 -->
+  <view class="footer-section">
+    <view class="footer-divider">
+      <view class="divider-line"></view>
+      <text class="divider-text">🍴</text>
+      <view class="divider-line"></view>
+    </view>
+    <text class="footer-text">西安理工大学后勤保障处</text>
+    <text class="footer-slogan">让每一餐都成为美好记忆</text>
+  </view>
+</view>
