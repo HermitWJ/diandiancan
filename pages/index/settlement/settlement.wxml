@@ -1,0 +1,270 @@
+<!-- 结算页面 - 统一下单（支持立即下单 & 购物车结算） -->
+<view class="settlement-page">
+
+  <!-- 顶部状态栏 -->
+  <view class="page-header">
+    <view class="header-bg"></view>
+    <view class="header-content">
+      <view class="header-back" bindtap="goBack">
+        <text class="header-back-icon">←</text>
+      </view>
+      <text class="header-title">{{pageTitle}}</text>
+      <view class="header-mode-tag {{mode === 'direct' ? 'mode-direct' : 'mode-cart'}}">
+        <text>{{mode === 'direct' ? '⚡ 闪购' : '🛒 购物车'}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 订单进度指示器 -->
+  <view class="progress-bar">
+    <view class="progress-step progress-active">
+      <view class="step-dot step-dot-active">1</view>
+      <text class="step-label step-label-active">选购商品</text>
+    </view>
+    <view class="progress-line progress-line-active"></view>
+    <view class="progress-step progress-active">
+      <view class="step-dot step-dot-active">2</view>
+      <text class="step-label step-label-active">确认订单</text>
+    </view>
+    <view class="progress-line"></view>
+    <view class="progress-step">
+      <view class="step-dot">3</view>
+      <text class="step-label">支付完成</text>
+    </view>
+  </view>
+
+  <!-- 配送信息卡片 -->
+  <view class="delivery-card">
+    <view class="card-badge">
+      <text>📍 取餐信息</text>
+    </view>
+    <view class="delivery-body">
+      <view class="delivery-row">
+        <view class="delivery-icon-box">
+          <text>🏪</text>
+        </view>
+        <view class="delivery-detail">
+          <text class="delivery-main">到店自取</text>
+          <text class="delivery-sub">请到餐厅对应档口取餐</text>
+        </view>
+      </view>
+      <view class="delivery-divider"></view>
+      <view class="delivery-info-grid">
+        <view class="info-grid-item">
+          <text class="info-grid-label">取餐人</text>
+          <text class="info-grid-value">{{UserInfo.nickname || '未登录'}}</text>
+        </view>
+        <view class="info-grid-item">
+          <text class="info-grid-label">联系电话</text>
+          <text class="info-grid-value">{{UserInfo.number || '未填写'}}</text>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 立即下单模式 - 快速下单提示 -->
+  <view class="quick-tip" wx:if="{{mode === 'direct'}}">
+    <text class="quick-tip-icon">⚡</text>
+    <text class="quick-tip-text">快速下单模式 · 为您优先出餐</text>
+  </view>
+
+  <!-- 订单商品列表 -->
+  <block wx:for="{{orderList}}" wx:key="index">
+    <view class="order-card">
+      <!-- 店铺名 -->
+      <view class="store-header">
+        <view class="store-left">
+          <view class="store-icon-wrap">
+            <text class="store-icon">🏪</text>
+          </view>
+          <text class="store-name">{{item.StoreName}}</text>
+        </view>
+        <view class="store-count">共 {{item.items.length}} 件</view>
+      </view>
+
+      <!-- 商品列表 -->
+      <view wx:for="{{item.items}}" wx:key="_id" wx:for-item="goods" class="goods-item">
+        <view class="goods-img-wrap">
+          <image src="{{goods.cover}}" mode="aspectFill" class="goods-img" />
+          <view class="goods-number-badge" wx:if="{{goods.number > 1}}">×{{goods.number}}</view>
+        </view>
+        <view class="goods-info">
+          <text class="goods-name">{{goods.dishname}}</text>
+          <view class="goods-spec" wx:if="{{goods.spec}}">
+            <text>{{goods.spec}}</text>
+          </view>
+          <view class="goods-bottom-row">
+            <view class="goods-price-wrap">
+              <text class="goods-price-symbol">¥</text>
+              <text class="goods-price">{{num_str.toFixedString(goods.price)}}</text>
+            </view>
+            <text class="goods-count">×{{goods.number || 1}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 费用明细 -->
+      <view class="fee-section">
+        <view class="fee-row">
+          <text class="fee-label">商品金额</text>
+          <text class="fee-value">¥{{num_str.toFixedString(item.totalPrice)}}</text>
+        </view>
+        <view class="fee-row">
+          <text class="fee-label">打包费</text>
+          <text class="fee-value fee-free">免费</text>
+        </view>
+        <view class="fee-row">
+          <text class="fee-label">服务费</text>
+          <text class="fee-value fee-free">免费</text>
+        </view>
+        <view class="fee-row fee-row-link" bindtap="openMask">
+          <text class="fee-label">优惠券</text>
+          <view class="fee-right">
+            <text class="fee-hint">暂无可用</text>
+            <text class="fee-arrow">›</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 小计 -->
+      <view class="subtotal-row">
+        <text class="subtotal-text">小计</text>
+        <view class="subtotal-price-wrap">
+          <text class="subtotal-symbol">¥</text>
+          <text class="subtotal-price">{{num_str.toFixedString(item.totalPrice)}}</text>
+        </view>
+      </view>
+    </view>
+  </block>
+
+  <!-- 订单备注卡片 -->
+  <view class="remark-card">
+    <view class="remark-row" bindtap="openTimePicker">
+      <view class="remark-left">
+        <view class="remark-icon-wrap remark-icon-time">
+          <text>🕐</text>
+        </view>
+        <text class="remark-label">取餐时间</text>
+      </view>
+      <view class="remark-right">
+        <text class="remark-value {{pickupTime ? '' : 'remark-placeholder'}}">{{pickupTime || '尽快取餐'}}</text>
+        <text class="remark-arrow">›</text>
+      </view>
+    </view>
+    <view class="remark-divider"></view>
+    <view class="remark-row" bindtap="toRemark">
+      <view class="remark-left">
+        <view class="remark-icon-wrap remark-icon-note">
+          <text>📝</text>
+        </view>
+        <text class="remark-label">备注</text>
+      </view>
+      <view class="remark-right">
+        <text class="remark-value remark-placeholder">{{remark || '口味、忌口等要求'}}</text>
+        <text class="remark-arrow">›</text>
+      </view>
+    </view>
+    <view class="remark-divider"></view>
+    <view class="remark-row">
+      <view class="remark-left">
+        <view class="remark-icon-wrap remark-icon-cutlery">
+          <text>🍴</text>
+        </view>
+        <text class="remark-label">餐具数量</text>
+      </view>
+      <view class="remark-right">
+        <text class="remark-value">1份</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 安全支付提示 -->
+  <view class="safe-tip">
+    <text class="safe-icon">🔒</text>
+    <text class="safe-text">已启用安全支付保障，请放心下单</text>
+  </view>
+
+  <!-- 底部占位 -->
+  <view class="settle-bottom-space"></view>
+</view>
+
+<!-- 底部结算栏 -->
+<view class="settle-bar">
+  <view class="settle-bar-left">
+    <view class="settle-discount">
+      <text class="discount-label">已优惠</text>
+      <text class="discount-value">¥0.00</text>
+    </view>
+    <view class="settle-total">
+      <text class="total-label">合计</text>
+      <view class="total-price-wrap">
+        <text class="total-symbol">¥</text>
+        <text class="total-price">{{num_str.toFixedString(totalAmount)}}</text>
+      </view>
+    </view>
+  </view>
+  <view class="settle-submit-btn {{mode === 'direct' ? 'submit-direct' : 'submit-cart'}}" bindtap="addList">
+    <text class="submit-icon">{{mode === 'direct' ? '⚡' : '🛒'}}</text>
+    <text class="submit-text">{{mode === 'direct' ? '立即支付' : '提交订单'}}</text>
+  </view>
+</view>
+
+<!-- 优惠券蒙层 -->
+<view hidden="{{isHiddMask}}" class="mask-overlay" bindtap="closeMask"></view>
+<!-- 优惠券弹出层 -->
+<view hidden="{{isHiddMask}}" class="coupon-popup">
+  <view class="coupon-popup-header">
+    <text class="coupon-popup-title">优惠券</text>
+    <view class="coupon-close" bindtap="closeMask">✕</view>
+  </view>
+  <view class="coupon-empty">
+    <text class="coupon-empty-emoji">🎫</text>
+    <text class="coupon-empty-text">暂无可用优惠券</text>
+  </view>
+</view>
+
+<!-- 取餐时间选择弹出层 -->
+<view hidden="{{!showTimePicker}}" class="mask-overlay" bindtap="closeTimePicker"></view>
+<view hidden="{{!showTimePicker}}" class="time-picker-popup">
+  <view class="time-picker-header">
+    <view class="time-picker-cancel" bindtap="closeTimePicker">取消</view>
+    <text class="time-picker-title">选择取餐时间</text>
+    <view class="time-picker-confirm" bindtap="confirmTimePicker">确定</view>
+  </view>
+  <!-- 快捷选项 -->
+  <view class="time-quick-options">
+    <view class="time-quick-item {{pickupTimeType === 'asap' ? 'time-quick-active' : ''}}" bindtap="selectQuickTime" data-type="asap">
+      <text class="time-quick-emoji">⚡</text>
+      <text class="time-quick-text">尽快取餐</text>
+    </view>
+    <view class="time-quick-item {{pickupTimeType === 'custom' ? 'time-quick-active' : ''}}" bindtap="selectQuickTime" data-type="custom">
+      <text class="time-quick-emoji">🕐</text>
+      <text class="time-quick-text">指定时间</text>
+    </view>
+  </view>
+  <!-- 时间滚动选择器 -->
+  <view class="time-scroll-wrap" wx:if="{{pickupTimeType === 'custom'}}">
+    <picker-view class="time-picker-view" value="{{timePickerValue}}" bindchange="onTimePickerChange" indicator-style="height: 80rpx;">
+      <picker-view-column>
+        <view wx:for="{{timeHours}}" wx:key="*this" class="time-picker-item">
+          {{item}}
+        </view>
+      </picker-view-column>
+      <picker-view-column>
+        <view class="time-picker-item time-picker-colon">:</view>
+      </picker-view-column>
+      <picker-view-column>
+        <view wx:for="{{timeMinutes}}" wx:key="*this" class="time-picker-item">
+          {{item}}
+        </view>
+      </picker-view-column>
+    </picker-view>
+  </view>
+  <!-- 尽快取餐提示 -->
+  <view class="time-asap-hint" wx:if="{{pickupTimeType === 'asap'}}">
+    <text class="time-asap-emoji">🍜</text>
+    <text class="time-asap-text">下单后尽快为您准备，约15-25分钟</text>
+  </view>
+</view>
+
+<wxs src="../../../utils/num_str.wxs" module="num_str"/>

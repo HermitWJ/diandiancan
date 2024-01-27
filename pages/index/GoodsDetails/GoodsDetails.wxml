@@ -1,0 +1,140 @@
+<!-- 商品详情页 - 现代化设计 -->
+<view class="detail-page">
+
+  <!-- 顶部商品大图 -->
+  <view class="hero-section">
+    <image src="{{item.cover}}" mode="aspectFill" class="hero-img" />
+    <view class="hero-overlay"></view>
+    <!-- 返回按钮 -->
+    <view class="back-btn" bindtap="goBack">
+      <text class="back-icon">←</text>
+    </view>
+    <!-- 分享浮动按钮 -->
+    <view class="share-float-btn">
+      <image src="/images/share.png" mode="aspectFit" class="share-icon" />
+      <button class="share-real-btn" open-type="share"></button>
+    </view>
+  </view>
+
+  <!-- 商品信息卡片 -->
+  <view class="info-card">
+    <view class="info-card-top">
+      <view class="price-row">
+        <view class="price-main">
+          <text class="price-symbol">¥</text>
+          <text class="price-value">{{num_str.toFixedString(item.price)}}</text>
+        </view>
+        <view class="collect-btn" bindtap="{{isCollect ? 'cancleCollect' : 'collect'}}">
+          <image wx:if="{{!isCollect}}" src="/images/collect.png" mode="aspectFit" class="collect-icon" />
+          <image wx:if="{{isCollect}}" src="/images/collect1.png" mode="aspectFit" class="collect-icon" />
+          <text class="collect-text">{{isCollect ? '已收藏' : '收藏'}}</text>
+        </view>
+      </view>
+      <text class="goods-name">{{item.dishname}}</text>
+      <view class="goods-tags">
+        <view class="tag-item">{{item.StoreName}}</view>
+        <view class="tag-item tag-hot">人气推荐</view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品详情区 -->
+  <view class="section-card">
+    <view class="section-header">
+      <view class="section-indicator"></view>
+      <text class="section-title">商品详情</text>
+    </view>
+    <view class="section-body">
+      <view class="detail-row">
+        <text class="detail-label">掌柜描述</text>
+        <text class="detail-content">{{item.details || '暂无描述'}}</text>
+      </view>
+      <view class="detail-row">
+        <text class="detail-label">所属档口</text>
+        <text class="detail-content">{{item.StoreName}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 商品评价区 -->
+  <view class="section-card">
+    <view class="section-header">
+      <view class="section-indicator"></view>
+      <text class="section-title">用户评价</text>
+      <text class="section-count">{{evaluate.length || 0}}条</text>
+    </view>
+
+    <!-- 评分概览 -->
+    <view class="rate-overview" wx:if="{{evaluate && evaluate.length > 0}}">
+      <view class="rate-overview-left">
+        <text class="rate-overview-score">{{avgStar}}</text>
+        <view class="rate-overview-stars">
+          <text class="mini-star {{avgStar >= 1 ? 'mini-star-active' : ''}}">★</text>
+          <text class="mini-star {{avgStar >= 2 ? 'mini-star-active' : ''}}">★</text>
+          <text class="mini-star {{avgStar >= 3 ? 'mini-star-active' : ''}}">★</text>
+          <text class="mini-star {{avgStar >= 4 ? 'mini-star-active' : ''}}">★</text>
+          <text class="mini-star {{avgStar >= 5 ? 'mini-star-active' : ''}}">★</text>
+        </view>
+      </view>
+      <view class="rate-overview-right">
+        <text class="rate-overview-label">综合评分</text>
+        <text class="rate-overview-desc">基于{{evaluate.length}}条评价</text>
+      </view>
+    </view>
+
+    <view class="section-body">
+      <!-- 暂无评价 -->
+      <view class="no-evaluate" wx:if="{{!evaluate || evaluate.length === 0}}">
+        <text class="no-evaluate-emoji">💬</text>
+        <text class="no-evaluate-text">暂无评价，快来抢沙发吧~</text>
+      </view>
+      <!-- 评价列表 -->
+      <block wx:for="{{evaluate}}" wx:key="_id">
+        <view class="evaluate-item">
+          <view class="evaluate-header">
+            <view class="evaluate-user">
+              <image src="{{item.cover || '/images/ava.png'}}" mode="aspectFill" class="evaluate-avatar" />
+              <view class="evaluate-user-info">
+                <text class="evaluate-name">{{item.nickname || '匿名用户'}}</text>
+                <!-- 星级评分展示 -->
+                <view class="evaluate-stars">
+                  <text class="eval-star {{item.starCount >= 1 ? 'eval-star-on' : ''}}">★</text>
+                  <text class="eval-star {{item.starCount >= 2 ? 'eval-star-on' : ''}}">★</text>
+                  <text class="eval-star {{item.starCount >= 3 ? 'eval-star-on' : ''}}">★</text>
+                  <text class="eval-star {{item.starCount >= 4 ? 'eval-star-on' : ''}}">★</text>
+                  <text class="eval-star {{item.starCount >= 5 ? 'eval-star-on' : ''}}">★</text>
+                </view>
+              </view>
+            </view>
+            <text class="evaluate-time">{{item.time}}</text>
+          </view>
+          <text class="evaluate-content">{{item.content}}</text>
+          <view class="evaluate-imgs" wx:if="{{item.src && item.src.length > 0}}">
+            <block wx:for="{{item.src}}" wx:key="*this" wx:for-item="SRC">
+              <image src="{{SRC}}" mode="aspectFill" class="evaluate-img" bindtap="previewImg" data-src="{{SRC}}" />
+            </block>
+          </view>
+        </view>
+      </block>
+    </view>
+  </view>
+
+  <!-- 底部占位 -->
+  <view class="bottom-space"></view>
+</view>
+
+<!-- 底部操作栏 -->
+<view class="action-bar">
+  <view class="action-right">
+    <view class="action-cart-btn" bindtap="toShopCart">
+      <text class="action-btn-icon">🛒</text>
+      <text>加入购物车</text>
+    </view>
+    <view class="action-buy-btn" bindtap="toList">
+      <text class="action-btn-icon">⚡</text>
+      <text>立即下单</text>
+    </view>
+  </view>
+</view>
+
+<wxs src="../../../utils/num_str.wxs" module="num_str" />

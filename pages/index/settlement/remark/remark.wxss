@@ -1,0 +1,24 @@
+.input{
+  display: flex;
+  border: white solid 1rpx;
+  border-radius: 30rpx;
+  margin: 20rpx 45rpx;
+  padding: 30rpx;
+  width: 600rpx;
+  height: 300rpx;
+  background-color: rgba(241, 241, 241, 0.877);
+}
+
+.button{
+  position: absolute;
+  bottom: 100rpx;
+  left: 125rpx;
+}
+
+.button button{
+  font-size: 35rpx;
+  color: white;
+  background-color: rgb(151, 151, 151);
+  width: 500rpx;
+  border-radius: 25rpx;
+}
