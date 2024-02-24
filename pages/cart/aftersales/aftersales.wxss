@@ -1,0 +1,211 @@
+.search-item {
+  display: flex;
+  flex-direction: row;
+  border: 1rpx solid #cfcfcf;
+  margin: 0 20rpx;
+  margin-bottom: 20rpx;
+  border-radius: 30rpx;
+  width: 620rpx;
+  /*圆角*/
+  justify-content: space-between;
+  /* 所有元素左右排列 */
+  padding: 0 10rpx;
+  /* 元素内边距上下0，左右20rpx */
+  align-items: center;
+  /* 各元素沿着主轴中线对齐 */
+  height: 80rpx;
+  background-color: #f0f0f0;
+}
+
+.search-img {
+  width: 50rpx;
+  height: 45rpx;
+  padding-left: 15rpx;
+}
+
+.search-box {
+  padding: 20rpx 20rpx;
+  width: 300px;
+  /* 输入框边距 */
+}
+
+.item {
+  display: flex;
+  align-items: center;
+}
+
+.image1 {
+  height: 50rpx;
+  width: 50rpx;
+  margin-bottom: 15rpx;
+}
+
+.shop-item {
+  margin: 20rpx 15rpx;
+  border: 5rpx solid #efefef;
+  border-radius: 15rpx;
+  box-shadow: 1rpx 1rpx 15rpx #ddd;
+  /* 给盒子增加阴影效果，横向偏移/纵向偏移/阴影扩散/颜色 */
+}
+
+.list {
+  display: flex;
+  justify-content: space-between;
+}
+
+.text-item {
+  margin-left: 10rpx;
+  display: flex;
+  flex-direction: row;
+  margin-bottom: 25rpx;
+}
+
+.tag {
+  margin-top: 10rpx;
+  margin-bottom: 10rpx;
+  color: gray;
+}
+
+.number {
+  font-size: 29rpx;
+  color: gray;
+  margin-left: 20rpx;
+  margin-top: 5rpx;
+}
+
+.price-item {
+  width: 20%;
+  display: flex;
+  flex-direction: column;
+}
+
+.price {
+  font-size: 30rpx;
+  font-weight: bold;
+  margin-right: 0rpx;
+}
+
+.Title {
+  margin: 20rpx 20rpx 20rpx 15rpx;
+  /* 规则：上右下左 */
+  display: flex;
+  justify-content: space-between;
+}
+
+.title {
+  font-weight: bold;
+  font-size: 45rpx;
+}
+
+.custom-tabbar {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.choose-type {
+  border-bottom: orange solid 5rpx;
+  margin-bottom: 8rpx;
+}
+
+.total {
+  padding-top: 20rpx;
+  margin-left: 20rpx;
+  margin-right: 20rpx;
+  margin-bottom: 85rpx;
+  border-top: rgba(223, 223, 223, 0.76) solid 1rpx;
+}
+
+.total1 {
+  display: flex;
+  justify-content: space-between;
+  padding: 10rpx 10rpx;
+}
+
+.orange{
+  color: orange;
+}
+
+.total2{
+  display: flex;
+  flex-direction: row;
+  float: right;
+  margin-top: 10rpx;
+  margin-right: 5rpx;
+}
+
+.text1{
+  font-size: 28rpx;
+  margin-top: 5rpx;
+  margin-right: 20rpx;
+}
+
+.text2{
+  color: orange;
+  font-weight: 550;
+}
+
+.text3{
+  font-size: 35rpx;
+  font-weight: 550;
+}
+
+.dingdan{
+  display: flex;
+  flex-direction: row;
+  text-align: center;
+  margin-left: 10rpx;
+  margin-bottom: 30rpx;
+}
+
+._id{
+  font-size: 28rpx;
+  margin-top: 5rpx;
+}
+
+.user {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 30rpx;
+  margin-top: 30rpx;
+}
+
+.left-part{
+  margin-top: 17rpx;
+  margin-left: 20rpx;
+  color: gray;
+  font-size: 29rpx;
+  display: flex;
+  flex-direction: column;
+}
+
+.right-part{
+  display: flex;
+  justify-content: flex-end;
+  margin-right: 15rpx;
+}
+
+.eva {
+  border: 1rpx solid #c7c6c6;
+  padding: 10rpx;
+  border-radius: 100rpx;
+  display: flex;
+  justify-content: center;
+  margin-top: 20rpx;
+  margin-left: 20rpx;
+  margin-bottom: 20rpx;
+  width: 80rpx;
+}
+
+.text4{
+  margin-right: 20rpx;
+  margin-top: 17rpx;
+  font-size: 29rpx;
+  color: gray;
+}
+
+.tuikuan{
+  display: flex;
+  flex-direction: column;
+}
+

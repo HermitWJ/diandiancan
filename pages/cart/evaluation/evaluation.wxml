@@ -1,0 +1,123 @@
+<!-- 评价页面 -->
+<view class="eval-page">
+  <!-- 顶部渐变背景 -->
+  <view class="top-bg"></view>
+
+  <!-- 商品信息卡片 -->
+  <view class="goods-card">
+    <view class="goods-card-title">
+      <text class="goods-card-icon">📋</text>
+      <text>评价商品</text>
+    </view>
+    <block wx:for="{{orderList}}" wx:key="id">
+      <view class="goods-item">
+        <image src="{{item.cover}}" mode="aspectFill" class="goods-img" />
+        <view class="goods-info">
+          <text class="goods-name">{{item.dishname}}</text>
+          <text class="goods-store">{{item.StoreName}}</text>
+        </view>
+      </view>
+    </block>
+  </view>
+
+  <!-- 星级评分区 -->
+  <view class="rate-card">
+    <view class="rate-title">
+      <text class="rate-icon">⭐</text>
+      <text>整体评分</text>
+    </view>
+    <view class="rate-stars">
+      <block wx:for="{{[1,2,3,4,5]}}" wx:key="*this">
+        <view class="star-item" bindtap="onStarTap" data-star="{{item}}">
+          <text class="star {{starCount >= item ? 'star-active' : 'star-default'}}">★</text>
+        </view>
+      </block>
+    </view>
+    <text class="rate-desc">{{rateText}}</text>
+  </view>
+
+  <!-- 评价内容区 -->
+  <view class="content-card">
+    <view class="content-header">
+      <text class="content-icon">✏️</text>
+      <text>评价内容</text>
+    </view>
+    <view class="textarea-wrapper">
+      <textarea
+        value="{{inputvalue}}"
+        placeholder="写下你对菜品的评价：菜品口味？服务态度？配送速度？"
+        placeholder-class="textarea-placeholder"
+        class="eval-textarea"
+        maxlength="{{maxlength}}"
+        bindinput="getPinglun"
+        auto-height
+      />
+      <view class="word-count">
+        <text class="{{inputvalue.length >= maxlength ? 'count-full' : ''}}">{{inputvalue.length}}</text>
+        <text class="count-divider">/</text>
+        <text>{{maxlength}}</text>
+      </view>
+    </view>
+
+    <!-- 快捷标签 -->
+    <view class="quick-tags">
+      <view
+        class="tag-item {{item.selected ? 'tag-selected' : ''}}"
+        wx:for="{{quickTags}}"
+        wx:key="text"
+        bindtap="onTagTap"
+        data-index="{{index}}"
+      >
+        <text>{{item.text}}</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 图片上传区 -->
+  <view class="upload-card">
+    <view class="upload-header">
+      <view class="upload-title-row">
+        <text class="upload-icon">📷</text>
+        <text>上传图片</text>
+      </view>
+      <text class="upload-count">{{img.length}}/9</text>
+    </view>
+    <view class="upload-grid">
+      <!-- 已上传图片 -->
+      <block wx:for="{{img}}" wx:key="index">
+        <view class="upload-img-item">
+          <image src="{{item}}" mode="aspectFill" class="upload-img" bindtap="previewImg" data-index="{{index}}" />
+          <view class="delete-btn" catchtap="DeleteImg" data-index="{{index}}">
+            <text class="delete-icon">✕</text>
+          </view>
+        </view>
+      </block>
+      <!-- 添加按钮 -->
+      <view class="upload-add-btn" bindtap="updateimg" wx:if="{{img.length < 9}}">
+        <text class="add-icon">+</text>
+        <text class="add-text">添加图片</text>
+      </view>
+    </view>
+    <text class="upload-tip">最多可上传9张图片，您的评价将在商品详情页展示</text>
+  </view>
+
+  <!-- 匿名评价选项 -->
+  <view class="anonymous-card">
+    <view class="anonymous-left">
+      <text class="anonymous-icon">🙈</text>
+      <text>匿名评价</text>
+    </view>
+    <switch checked="{{isAnonymous}}" bindchange="onAnonymousChange" color="#ff6b35" />
+  </view>
+
+  <!-- 底部占位 -->
+  <view class="bottom-space"></view>
+</view>
+
+<!-- 底部发布按钮 -->
+<view class="submit-bar">
+  <view class="submit-btn {{canSubmit ? 'submit-active' : 'submit-disabled'}}" bindtap="sendToCloud">
+    <text class="submit-icon">🚀</text>
+    <text>发布评价</text>
+  </view>
+</view>

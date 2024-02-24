@@ -1,0 +1,19 @@
+<!-- 搜索框 -->
+<view class="search-item">
+  <input type="text" placeholder="请输入菜品关键词" bindinput="inputvalues" value="{{text1}}" class="search-box" />
+  <!-- 用type设置文本框输入内容的类型，placeholder给用户提示关键词，bindinput来绑定并返回用户输入的文字
+value用来定义初始值并且动态获取返回用户输入的内容 -->
+  <image bindtap="search" src="/images/search.png" class="search-img"></image>
+</view>
+<block wx:for="{{goods}}" wx:key="id">
+  <view bindtap="toDetails" data-id="{{item._id}}" class="total">
+    <view>
+      <image src="{{item.cover}}" mode="" />
+    </view>
+    <view class="text-total">
+      <text class="text-title">{{item.dishname}}</text>
+      <text>{{item.details}}</text>
+      <text class="text-price">{{item.price}}</text>
+    </view>
+  </view>
+</block>

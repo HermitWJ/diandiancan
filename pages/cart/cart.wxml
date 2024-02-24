@@ -1,0 +1,378 @@
+<!-- 订单页面 -->
+<wxs src="../../utils/tools.wxs" module="tools" />
+<wxs src="../../utils/num_str.wxs" module="num_str" />
+
+<!-- 顶部搜索栏 -->
+<view class="header">
+  <view class="search-bar">
+    <image src="/images/search.png" class="search-icon"></image>
+    <input type="text" placeholder="订单号/菜品名/店铺名/手机号" bindinput="onSearchInput" bindconfirm="onSearchConfirm" confirm-type="search" value="{{searchKeyword}}" class="search-input" bindfocus="onSearchFocus" />
+    <view class="search-clear-btn" wx:if="{{searchKeyword}}" bindtap="clearSearch">✕</view>
+  </view>
+  <view class="search-btn" bindtap="onSearchConfirm" wx:if="{{searchKeyword}}">
+    <text>搜索</text>
+  </view>
+</view>
+
+<!-- 搜索下拉面板（覆盖在订单列表之上） -->
+<view class="search-overlay" wx:if="{{showSearchPanel}}" bindtap="closeSearchPanel"></view>
+<view class="search-dropdown" wx:if="{{showSearchPanel}}">
+  <!-- 搜索加载中 -->
+  <view class="search-loading" wx:if="{{searchLoading}}">
+    <text class="loading-dot">●</text>
+    <text class="loading-text">搜索中...</text>
+  </view>
+  <!-- 搜索无结果 -->
+  <view class="search-empty-tip" wx:if="{{!searchLoading && searchResults.length === 0 && searchKeyword}}">
+    <text class="empty-search-icon">🔍</text>
+    <text class="empty-search-text">未找到相关订单</text>
+    <text class="empty-search-sub">试试其他关键词吧</text>
+  </view>
+  <!-- 搜索结果列表 -->
+  <view class="search-result-count" wx:if="{{!searchLoading && searchResults.length > 0}}">
+    <text>找到 <text class="count-num">{{searchResults.length}}</text> 个相关订单</text>
+  </view>
+  <scroll-view scroll-y class="search-result-scroll" wx:if="{{!searchLoading && searchResults.length > 0}}">
+    <view class="search-result-item" wx:for="{{searchResults}}" wx:key="_id" bindtap="onSearchResultTap" data-id="{{item._id}}">
+      <view class="result-left">
+        <view class="result-shop-row">
+          <text class="result-shop-icon">🏪</text>
+          <text class="result-shop-name">{{item.Detail[0].StoreName || '未知店铺'}}</text>
+        </view>
+        <view class="result-dish-row">
+          <text class="result-dish-text">{{item._dishSummary}}</text>
+        </view>
+        <view class="result-meta-row">
+          <text class="result-time">{{item.time || ''}}</text>
+          <text class="result-order-id">{{item._id}}</text>
+        </view>
+      </view>
+      <view class="result-right">
+        <view class="result-status result-status-{{item.Status}}">
+          <text wx:if="{{item.Status==-1}}">待支付</text>
+          <text wx:if="{{item.Status==0}}">制作中</text>
+          <text wx:if="{{item.Status==1}}">待取餐</text>
+          <text wx:if="{{item.Status==2}}">待评价</text>
+          <text wx:if="{{item.Status==3}}">已完成</text>
+        </view>
+        <text class="result-price">￥{{num_str.toFixedString(item.totalPrice)}}</text>
+        <view class="result-arrow">›</view>
+      </view>
+    </view>
+  </scroll-view>
+</view>
+
+<!-- 状态标签栏 -->
+<view class="tab-bar">
+  <view class="tab-item {{Status==-1?'tab-active':''}}" bindtap="choosetype" data-type="-1">
+    <text>待支付</text>
+    <view class="tab-line" wx:if="{{Status==-1}}"></view>
+  </view>
+  <view class="tab-item {{Status==0?'tab-active':''}}" bindtap="choosetype" data-type="0">
+    <text>进行中</text>
+    <view class="tab-line" wx:if="{{Status==0}}"></view>
+  </view>
+  <view class="tab-item {{Status==1?'tab-active':''}}" bindtap="choosetype" data-type="1">
+    <text>待取餐</text>
+    <view class="tab-line" wx:if="{{Status==1}}"></view>
+  </view>
+  <view class="tab-item {{Status==2?'tab-active':''}}" bindtap="choosetype" data-type="2">
+    <text>待评价</text>
+    <view class="tab-line" wx:if="{{Status==2}}"></view>
+  </view>
+  <view class="tab-item {{Status==3?'tab-active':''}}" bindtap="choosetype" data-type="3">
+    <text>已完成</text>
+    <view class="tab-line" wx:if="{{Status==3}}"></view>
+  </view>
+</view>
+
+<!-- 搜索选中的订单详情（展示在最顶部） -->
+<view class="selected-order-banner" wx:if="{{selectedOrder}}">
+  <view class="selected-order-header">
+    <text class="selected-order-title">🔍 搜索结果订单详情</text>
+    <view class="selected-order-close" bindtap="closeSelectedOrder">✕ 关闭</view>
+  </view>
+</view>
+<block wx:if="{{selectedOrder}}">
+  <view class="order-card order-card-highlight">
+    <!-- 订单头部：店铺名 + 订单状态标签 -->
+    <view class="card-header">
+      <view class="shop-info">
+        <text class="shop-icon">🏪</text>
+        <text class="shop-name">{{selectedOrder.Detail[0].StoreName}}</text>
+      </view>
+      <view class="status-tag status-{{selectedOrder.Status}}">
+        <text wx:if="{{selectedOrder.Status==-1}}">待支付</text>
+        <text wx:if="{{selectedOrder.Status==0}}">制作中</text>
+        <text wx:if="{{selectedOrder.Status==1}}">待取餐</text>
+        <text wx:if="{{selectedOrder.Status==2}}">待评价</text>
+        <text wx:if="{{selectedOrder.Status==3}}">已完成</text>
+      </view>
+    </view>
+    <!-- 取餐号高亮区域 -->
+    <view class="pickup-banner" wx:if="{{(selectedOrder.Status==0||selectedOrder.Status==1) && selectedOrder.qucanhao}}">
+      <view class="pickup-inner">
+        <text class="pickup-label">取餐号</text>
+        <text class="pickup-number">{{selectedOrder.qucanhao}}</text>
+      </view>
+      <text class="pickup-tip" wx:if="{{selectedOrder.Status==0}}">正在制作中，请耐心等待</text>
+      <text class="pickup-tip" wx:if="{{selectedOrder.Status==1}}">餐品已备好，请尽快取餐</text>
+    </view>
+    <!-- 菜品列表 -->
+    <view class="dish-list">
+      <block wx:for="{{selectedOrder.Detail}}" wx:key="_id" wx:for-item="Detail">
+        <view class="dish-item">
+          <image src="{{Detail.cover}}" class="dish-img" mode="aspectFill" />
+          <view class="dish-info">
+            <text class="dish-name">{{Detail.dishname}}</text>
+            <text class="dish-desc">{{Detail.details || ''}}</text>
+            <text class="dish-qty">x{{Detail.number}}</text>
+          </view>
+          <view class="dish-price-wrap">
+            <text class="dish-price">￥{{num_str.toFixedString(Detail.price)}}</text>
+            <view class="eva-btn" wx:if="{{selectedOrder.Status==2}}" bindtap="navigateToOrders" data-id="{{Detail._id}}" data-danhao="{{selectedOrder._id}}">
+              <text>去评价</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+    <!-- 费用明细 -->
+    <view class="fee-section">
+      <view class="fee-row">
+        <text class="fee-label">打包费</text>
+        <text class="fee-value">￥0.00</text>
+      </view>
+      <view class="fee-row">
+        <text class="fee-label">配送费</text>
+        <text class="fee-value">￥0.00</text>
+      </view>
+      <view class="fee-row">
+        <text class="fee-label">优惠券</text>
+        <text class="fee-value fee-discount">-￥{{num_str.toFixedString(selectedOrder.discountAmount || 0)}}</text>
+      </view>
+      <view class="fee-total">
+        <text class="fee-total-label">合计</text>
+        <text class="fee-total-price">￥{{num_str.toFixedString(selectedOrder.totalPrice)}}</text>
+      </view>
+    </view>
+    <!-- 订单详情信息区 -->
+    <view class="order-detail-section">
+      <view class="detail-row" wx:if="{{selectedOrder.pickupTime}}">
+        <text class="detail-icon">⏰</text>
+        <text class="detail-label">取餐时间</text>
+        <text class="detail-value">{{selectedOrder.pickupTime}}</text>
+      </view>
+      <view class="detail-row" wx:if="{{selectedOrder.time}}">
+        <text class="detail-icon">📅</text>
+        <text class="detail-label">下单时间</text>
+        <text class="detail-value">{{selectedOrder.time}}</text>
+      </view>
+      <view class="detail-row" wx:if="{{selectedOrder.number}}">
+        <text class="detail-icon">📱</text>
+        <text class="detail-label">手机号</text>
+        <text class="detail-value">{{tools.splitPhone(selectedOrder.number + '')}}</text>
+      </view>
+      <view class="detail-row" wx:if="{{selectedOrder.mode}}">
+        <text class="detail-icon">🛒</text>
+        <text class="detail-label">下单方式</text>
+        <text class="detail-value">{{selectedOrder.mode == 'cart' ? '购物车下单' : '直接下单'}}</text>
+      </view>
+      <view class="detail-row remark-row" wx:if="{{selectedOrder.remark}}">
+        <text class="detail-icon">📝</text>
+        <text class="detail-label">备注</text>
+        <text class="detail-value remark-value">{{selectedOrder.remark}}</text>
+      </view>
+      <view class="detail-row">
+        <text class="detail-icon">🔖</text>
+        <text class="detail-label">订单号</text>
+        <text class="detail-value order-id-text">{{selectedOrder._id}}</text>
+      </view>
+    </view>
+    <!-- 底部操作栏（全状态可操作） -->
+    <view class="action-bar">
+      <view class="action-left">
+        <button class="contact-btn" open-type="contact" plain="true">
+          <text class="contact-icon">💬</text>
+          <text>联系客服</text>
+        </button>
+      </view>
+      <view class="action-right">
+        <view wx:if="{{selectedOrder.Status==-1||selectedOrder.Status==0}}" class="action-btn action-btn-ghost" data-id="{{selectedOrder._id}}" bindtap="toCancel">
+          <text>取消订单</text>
+        </view>
+        <view wx:if="{{selectedOrder.Status==1}}" class="action-btn action-btn-ghost" bindtap="toAfterSales" data-id="{{selectedOrder._id}}">
+          <text>申请退款</text>
+        </view>
+        <view wx:if="{{selectedOrder.Status==-1}}" class="action-btn action-btn-primary" data-id="{{selectedOrder._id}}" bindtap="topay">
+          <text>立即支付</text>
+        </view>
+        <view wx:if="{{selectedOrder.Status==0}}" class="action-btn action-btn-warn" bindtap="HurryUp">
+          <text>催一下🔥</text>
+        </view>
+        <view wx:if="{{selectedOrder.Status==1}}" class="action-btn action-btn-primary" bindtap="confirmPickup" data-id="{{selectedOrder._id}}">
+          <text>确认取餐</text>
+        </view>
+        <view wx:if="{{selectedOrder.Status==2||selectedOrder.Status==3}}" class="action-btn action-btn-primary" bindtap="navigateToCat">
+          <text>再来一单</text>
+        </view>
+      </view>
+    </view>
+  </view>
+</block>
+
+<!-- 空状态提示 -->
+<view class="empty-state" wx:if="{{!selectedOrder && (!orderList || orderList.length === 0)}}">
+  <text class="empty-icon">📋</text>
+  <text class="empty-text">暂无相关订单</text>
+  <text class="empty-sub">快去点一份美味吧～</text>
+</view>
+
+<!-- 订单列表 -->
+<block wx:for="{{orderList}}" wx:key="_id">
+  <view class="order-card" wx:if="{{!selectedOrder}}">
+
+    <!-- 订单头部：店铺名 + 订单状态标签 -->
+    <view class="card-header">
+      <view class="shop-info">
+        <text class="shop-icon">🏪</text>
+        <text class="shop-name">{{item.Detail[0].StoreName}}</text>
+      </view>
+      <view class="status-tag status-{{item.Status}}">
+        <text wx:if="{{item.Status==-1}}">待支付</text>
+        <text wx:if="{{item.Status==0}}">制作中</text>
+        <text wx:if="{{item.Status==1}}">待取餐</text>
+        <text wx:if="{{item.Status==2}}">待评价</text>
+        <text wx:if="{{item.Status==3}}">已完成</text>
+      </view>
+    </view>
+
+    <!-- 取餐号高亮区域（仅进行中/待取餐显示） -->
+    <view class="pickup-banner" wx:if="{{(item.Status==0||item.Status==1) && item.qucanhao}}">
+      <view class="pickup-inner">
+        <text class="pickup-label">取餐号</text>
+        <text class="pickup-number">{{item.qucanhao}}</text>
+      </view>
+      <text class="pickup-tip" wx:if="{{item.Status==0}}">正在制作中，请耐心等待</text>
+      <text class="pickup-tip" wx:if="{{item.Status==1}}">餐品已备好，请尽快取餐</text>
+    </view>
+
+    <!-- 菜品列表 -->
+    <view class="dish-list">
+      <block wx:for="{{item.Detail}}" wx:key="_id" wx:for-item="Detail">
+        <view class="dish-item">
+          <image src="{{Detail.cover}}" class="dish-img" mode="aspectFill" />
+          <view class="dish-info">
+            <text class="dish-name">{{Detail.dishname}}</text>
+            <text class="dish-desc">{{Detail.details || ''}}</text>
+            <text class="dish-qty">x{{Detail.number}}</text>
+          </view>
+          <view class="dish-price-wrap">
+            <text class="dish-price">￥{{num_str.toFixedString(Detail.price)}}</text>
+            <!-- 评价按钮 -->
+            <view class="eva-btn" wx:if="{{item.Status==2}}" bindtap="navigateToOrders" data-id="{{Detail._id}}" data-danhao="{{item._id}}">
+              <text>去评价</text>
+            </view>
+          </view>
+        </view>
+      </block>
+    </view>
+
+    <!-- 费用明细 -->
+    <view class="fee-section">
+      <view class="fee-row">
+        <text class="fee-label">打包费</text>
+        <text class="fee-value">￥0.00</text>
+      </view>
+      <view class="fee-row">
+        <text class="fee-label">配送费</text>
+        <text class="fee-value">￥0.00</text>
+      </view>
+      <view class="fee-row">
+        <text class="fee-label">优惠券</text>
+        <text class="fee-value fee-discount">-￥{{num_str.toFixedString(item.discountAmount || 0)}}</text>
+      </view>
+      <view class="fee-total">
+        <text class="fee-total-label">合计</text>
+        <text class="fee-total-price">￥{{num_str.toFixedString(item.totalPrice)}}</text>
+      </view>
+    </view>
+
+    <!-- 订单详情信息区 -->
+    <view class="order-detail-section">
+      <!-- 取餐时间 -->
+      <view class="detail-row" wx:if="{{item.pickupTime}}">
+        <text class="detail-icon">⏰</text>
+        <text class="detail-label">取餐时间</text>
+        <text class="detail-value">{{item.pickupTime}}</text>
+      </view>
+      <!-- 下单时间 -->
+      <view class="detail-row" wx:if="{{item.time}}">
+        <text class="detail-icon">📅</text>
+        <text class="detail-label">下单时间</text>
+        <text class="detail-value">{{item.time}}</text>
+      </view>
+      <!-- 联系电话 -->
+      <view class="detail-row" wx:if="{{item.number}}">
+        <text class="detail-icon">📱</text>
+        <text class="detail-label">手机号</text>
+        <text class="detail-value">{{tools.splitPhone(item.number + '')}}</text>
+      </view>
+      <!-- 下单方式 -->
+      <view class="detail-row" wx:if="{{item.mode}}">
+        <text class="detail-icon">🛒</text>
+        <text class="detail-label">下单方式</text>
+        <text class="detail-value">{{item.mode == 'cart' ? '购物车下单' : '直接下单'}}</text>
+      </view>
+      <!-- 备注 -->
+      <view class="detail-row remark-row" wx:if="{{item.remark}}">
+        <text class="detail-icon">📝</text>
+        <text class="detail-label">备注</text>
+        <text class="detail-value remark-value">{{item.remark}}</text>
+      </view>
+      <!-- 订单号 -->
+      <view class="detail-row">
+        <text class="detail-icon">🔖</text>
+        <text class="detail-label">订单号</text>
+        <text class="detail-value order-id-text">{{item._id}}</text>
+      </view>
+    </view>
+
+    <!-- 底部操作栏 -->
+    <view class="action-bar">
+      <view class="action-left">
+        <button class="contact-btn" open-type="contact" plain="true">
+          <text class="contact-icon">💬</text>
+          <text>联系客服</text>
+        </button>
+      </view>
+      <view class="action-right">
+        <!-- 取消订单 -->
+        <view wx:if="{{item.Status==-1||item.Status==0}}" class="action-btn action-btn-ghost" data-id="{{item._id}}" bindtap="toCancel">
+          <text>取消订单</text>
+        </view>
+        <!-- 申请退款 -->
+        <view wx:if="{{item.Status==1}}" class="action-btn action-btn-ghost" bindtap="toAfterSales" data-id="{{item._id}}">
+          <text>申请退款</text>
+        </view>
+        <!-- 主要操作按钮 -->
+        <view wx:if="{{item.Status==-1}}" class="action-btn action-btn-primary" data-id="{{item._id}}" bindtap="topay">
+          <text>立即支付</text>
+        </view>
+        <view wx:if="{{item.Status==0}}" class="action-btn action-btn-warn" bindtap="HurryUp">
+          <text>催一下🔥</text>
+        </view>
+        <view wx:if="{{item.Status==1}}" class="action-btn action-btn-primary" bindtap="confirmPickup" data-id="{{item._id}}">
+          <text>确认取餐</text>
+        </view>
+        <view wx:if="{{item.Status==2||item.Status==3}}" class="action-btn action-btn-primary" bindtap="navigateToCat">
+          <text>再来一单</text>
+        </view>
+      </view>
+    </view>
+
+  </view>
+</block>
+
+<!-- 底部安全区域 -->
+<view class="safe-bottom"></view>
