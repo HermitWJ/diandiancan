@@ -1,0 +1,101 @@
+<!-- 顶部波浪背景 -->
+<view class="wave-header">
+  <view class="wave-bg">
+    <view class="brand-area">
+      <view class="brand-icon">🍜</view>
+      <view class="brand-name">理工大预点餐系统</view>
+      <view class="brand-slogan">美味触手可及 · 校园生活好帮手</view>
+    </view>
+  </view>
+  <view class="wave-shape">
+    <view class="wave wave1"></view>
+    <view class="wave wave2"></view>
+  </view>
+</view>
+
+<!-- 主体内容区 -->
+<view class="login-body">
+  <!-- Tab 切换栏 -->
+  <view class="tab-bar">
+    <view class="tab-item {{Status==-1?'tab-active':''}}" bindtap="choosetype" data-type="-1">
+      <text class="tab-icon">🎓</text>
+      <text class="tab-text">学生端</text>
+      <view class="tab-indicator" wx:if="{{Status==-1}}"></view>
+    </view>
+    <view class="tab-item {{Status==0?'tab-active':''}}" bindtap="choosetype" data-type="0">
+      <text class="tab-icon">👨‍🍳</text>
+      <text class="tab-text">后厨端</text>
+      <view class="tab-indicator" wx:if="{{Status==0}}"></view>
+    </view>
+  </view>
+
+  <!-- 登录表单卡片 -->
+  <view class="form-card">
+    <!-- 学生端登录 -->
+    <view wx:if="{{Status==-1}}" class="form-content">
+      <view class="input-group">
+        <view class="input-row">
+          <view class="input-icon-wrap">
+            <image src="/images/login/sch.png" class="input-icon"></image>
+          </view>
+          <input name="studentID" type="number" placeholder="请输入手机号" class="input-field" bindinput="getAccount" placeholder-class="placeholder-style" />
+        </view>
+        <view class="input-divider"></view>
+        <view class="input-row">
+          <view class="input-icon-wrap">
+            <image src="/images/login/pas1.png" class="input-icon"></image>
+          </view>
+          <input name="password" type="{{showPassword ? 'text' : 'password'}}" placeholder="请输入密码" class="input-field" bindinput="getPassword" placeholder-class="placeholder-style" />
+          <view class="eye-btn" bindtap="togglePassword">
+            <text>{{showPassword ? '🙈' : '👁️'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <button class="login-btn" bindtap="Login">
+        <text class="login-btn-text">登 录</text>
+      </button>
+
+      <view class="form-footer">
+        <text class="forget-link" bindtap="forget">忘记密码？</text>
+        <view class="register-link" bindtap="toRegister">
+          <text class="register-text">还没有账号？</text>
+          <text class="register-highlight">立即注册</text>
+        </view>
+      </view>
+    </view>
+
+    <!-- 后厨端登录 -->
+    <view wx:if="{{Status==0}}" class="form-content">
+      <view class="input-group">
+        <view class="input-row">
+          <view class="input-icon-wrap">
+            <image src="/images/cook.png" class="input-icon"></image>
+          </view>
+          <input name="Account" type="number" placeholder="请输入账号" class="input-field" bindinput="getCookAccount" placeholder-class="placeholder-style" />
+        </view>
+        <view class="input-divider"></view>
+        <view class="input-row">
+          <view class="input-icon-wrap">
+            <image src="/images/login/pas1.png" class="input-icon"></image>
+          </view>
+          <input name="password" type="{{showCookPassword ? 'text' : 'password'}}" placeholder="请输入密码" class="input-field" bindinput="getCookPassword" placeholder-class="placeholder-style" />
+          <view class="eye-btn" bindtap="toggleCookPassword">
+            <text>{{showCookPassword ? '🙈' : '👁️'}}</text>
+          </view>
+        </view>
+      </view>
+
+      <button class="login-btn cook-btn" bindtap="CookLogin">
+        <text class="login-btn-text">登 录</text>
+      </button>
+    </view>
+  </view>
+
+  <!-- 底部装饰 -->
+  <view class="login-footer">
+    <view class="footer-line"></view>
+    <text class="footer-text">西安理工大学 · 智慧校园</text>
+    <view class="footer-line"></view>
+  </view>
+</view>

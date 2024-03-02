@@ -1,0 +1,254 @@
+/* ===== 密保页全局 ===== */
+page {
+  background: #f5f6fa;
+  min-height: 100vh;
+}
+
+/* ===== 顶部装饰区 ===== */
+.reg-header {
+  position: relative;
+  width: 100%;
+  height: 280rpx;
+  overflow: hidden;
+}
+
+.reg-header-bg {
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8f60 50%, #ffa726 100%);
+  border-radius: 0 0 60rpx 60rpx;
+}
+
+.reg-header-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.reg-title {
+  font-size: 44rpx;
+  font-weight: 700;
+  color: #fff;
+  letter-spacing: 4rpx;
+  text-shadow: 0 4rpx 12rpx rgba(0, 0, 0, 0.15);
+}
+
+.reg-subtitle {
+  font-size: 24rpx;
+  color: rgba(255, 255, 255, 0.8);
+  margin-top: 12rpx;
+  letter-spacing: 2rpx;
+}
+
+/* ===== 步骤指示器 ===== */
+.step-bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 36rpx 60rpx 20rpx;
+}
+
+.step-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.step-circle {
+  width: 56rpx;
+  height: 56rpx;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #ff6b35, #ffa726);
+  color: #fff;
+  font-size: 28rpx;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4rpx 16rpx rgba(255, 107, 53, 0.3);
+}
+
+.step-done {
+  background: linear-gradient(135deg, #43a047, #66bb6a);
+  box-shadow: 0 4rpx 16rpx rgba(67, 160, 71, 0.3);
+  font-size: 24rpx;
+}
+
+.step-label {
+  font-size: 22rpx;
+  color: #ff6b35;
+  margin-top: 8rpx;
+  font-weight: 600;
+}
+
+.step-label-done {
+  color: #43a047;
+}
+
+.step-label-inactive {
+  color: #bbb;
+  font-weight: 400;
+}
+
+.step-line {
+  width: 120rpx;
+  height: 4rpx;
+  margin: 0 20rpx;
+  margin-bottom: 28rpx;
+  border-radius: 2rpx;
+}
+
+.step-line-active {
+  background: linear-gradient(90deg, #43a047, #ffa726);
+}
+
+/* ===== 安全提示 ===== */
+.security-tip {
+  display: flex;
+  align-items: center;
+  margin: 10rpx 32rpx 24rpx;
+  padding: 20rpx 24rpx;
+  background: linear-gradient(135deg, #fff8e1, #fff3cd);
+  border-radius: 20rpx;
+  border: 1rpx solid #ffe082;
+}
+
+.security-icon {
+  font-size: 36rpx;
+  margin-right: 12rpx;
+}
+
+.security-text {
+  font-size: 24rpx;
+  color: #e65100;
+  line-height: 1.5;
+}
+
+/* ===== 密保卡片 ===== */
+.mibao-card {
+  margin: 0 32rpx 24rpx;
+  background: #fff;
+  border-radius: 24rpx;
+  padding: 0;
+  box-shadow: 0 4rpx 24rpx rgba(0, 0, 0, 0.04);
+  overflow: hidden;
+}
+
+.mibao-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20rpx 28rpx;
+  background: linear-gradient(135deg, #fafafa, #f5f6fa);
+  border-bottom: 1rpx solid #f0f1f5;
+}
+
+.mibao-num {
+  font-size: 28rpx;
+  font-weight: 700;
+  color: #333;
+}
+
+.mibao-badge {
+  font-size: 20rpx;
+  color: #ff6b35;
+  background: #fff3ed;
+  padding: 4rpx 16rpx;
+  border-radius: 20rpx;
+  font-weight: 600;
+}
+
+.mibao-input-group {
+  padding: 0;
+}
+
+.input-row {
+  display: flex;
+  align-items: center;
+  padding: 22rpx 28rpx;
+}
+
+.input-divider {
+  height: 1rpx;
+  background: #f0f1f5;
+  margin: 0 28rpx;
+}
+
+.input-emoji {
+  font-size: 36rpx;
+  margin-right: 16rpx;
+  flex-shrink: 0;
+}
+
+.input-field {
+  flex: 1;
+  padding: 10rpx 0;
+  font-size: 28rpx;
+  color: #333;
+}
+
+.placeholder-style {
+  color: #c0c4cc;
+  font-size: 26rpx;
+}
+
+/* ===== 提交按钮 ===== */
+.submit-btn {
+  display: flex !important;
+  align-items: center;
+  justify-content: center;
+  margin: 40rpx 32rpx 0;
+  height: 96rpx;
+  background: linear-gradient(135deg, #ff6b35 0%, #ff8f60 50%, #ffa726 100%) !important;
+  border-radius: 48rpx;
+  border: none;
+  box-shadow: 0 8rpx 24rpx rgba(255, 107, 53, 0.35);
+  padding: 0;
+  line-height: 96rpx;
+}
+
+.submit-btn::after {
+  border: none;
+}
+
+.submit-btn:active {
+  transform: scale(0.97);
+}
+
+.submit-btn-text {
+  color: #fff;
+  font-size: 32rpx;
+  font-weight: 700;
+  letter-spacing: 4rpx;
+}
+
+.submit-btn-icon {
+  font-size: 32rpx;
+  margin-left: 12rpx;
+}
+
+/* ===== 底部链接 ===== */
+.bottom-link {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40rpx 0 60rpx;
+}
+
+.bottom-text {
+  font-size: 26rpx;
+  color: #999;
+}
+
+.bottom-highlight {
+  font-size: 26rpx;
+  color: #ff6b35;
+  font-weight: 600;
+  margin-left: 8rpx;
+}

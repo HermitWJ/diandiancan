@@ -1,0 +1,95 @@
+<!-- 顶部装饰 -->
+<view class="reg-header">
+  <view class="reg-header-bg"></view>
+  <view class="reg-header-content">
+    <view class="reg-title">创建账号</view>
+    <view class="reg-subtitle">加入理工大预点餐，开启美味之旅</view>
+  </view>
+</view>
+
+<!-- 步骤指示器 -->
+<view class="step-bar">
+  <view class="step-item step-active">
+    <view class="step-circle">1</view>
+    <text class="step-label">基本信息</text>
+  </view>
+  <view class="step-line step-line-inactive"></view>
+  <view class="step-item">
+    <view class="step-circle step-circle-inactive">2</view>
+    <text class="step-label step-label-inactive">设置密保</text>
+  </view>
+</view>
+
+<!-- 头像上传 -->
+<view class="avatar-section">
+  <button open-type="chooseAvatar" bindchooseavatar="getimage" class="avatar-btn">
+    <view class="avatar-wrapper">
+      <image src="{{avatarUrl?avatarUrl:'/images/ava.png'}}" class="avatar-img" mode="aspectFill" />
+      <view class="avatar-badge">
+        <text class="camera-icon">📷</text>
+      </view>
+    </view>
+    <text class="avatar-tip">点击上传头像</text>
+  </button>
+</view>
+
+<!-- 注册表单 -->
+<form bindsubmit="register">
+  <view class="form-card">
+    <!-- 姓名 -->
+    <view class="input-row">
+      <view class="input-icon-wrap icon-blue">
+        <image src="/images/login/name.png" class="input-icon"></image>
+      </view>
+      <input name="name" type="text" placeholder="请输入真实姓名" class="input-field" placeholder-class="placeholder-style" />
+    </view>
+    <view class="input-divider"></view>
+
+    <!-- 昵称 -->
+    <view class="input-row">
+      <view class="input-icon-wrap icon-purple">
+        <image src="/images/login/user.png" class="input-icon"></image>
+      </view>
+      <input name="nickname" type="nickname" placeholder="请输入昵称" class="input-field" placeholder-class="placeholder-style" />
+    </view>
+    <view class="input-divider"></view>
+
+    <!-- 手机号 -->
+    <view class="input-row">
+      <view class="input-icon-wrap icon-green">
+        <image src="/images/login/tel.png" class="input-icon"></image>
+      </view>
+      <input name="number" type="number" placeholder="请输入手机号" class="input-field" placeholder-class="placeholder-style" />
+    </view>
+    <view class="input-divider"></view>
+
+    <!-- 密码 -->
+    <view class="input-row">
+      <view class="input-icon-wrap icon-orange">
+        <image src="/images/login/pas1.png" class="input-icon"></image>
+      </view>
+      <input name="password" type="password" placeholder="请输入密码" class="input-field" placeholder-class="placeholder-style" />
+    </view>
+    <view class="input-divider"></view>
+
+    <!-- 确认密码 -->
+    <view class="input-row">
+      <view class="input-icon-wrap icon-red">
+        <image src="/images/login/pas2.png" class="input-icon"></image>
+      </view>
+      <input name="password1" type="password" placeholder="确认密码" class="input-field" placeholder-class="placeholder-style" />
+    </view>
+  </view>
+
+  <!-- 下一步按钮 -->
+  <button class="submit-btn" form-type="submit" bindtap="toMibao">
+    <text class="submit-btn-text">下一步</text>
+    <text class="submit-btn-arrow">→</text>
+  </button>
+</form>
+
+<!-- 底部链接 -->
+<view class="bottom-link" bindtap="toLogin">
+  <text class="bottom-text">已有账号？</text>
+  <text class="bottom-highlight">去登录</text>
+</view>

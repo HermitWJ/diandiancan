@@ -1,0 +1,60 @@
+<!-- 顶部装饰 -->
+<view class="forget-header">
+  <view class="forget-header-bg"></view>
+  <view class="forget-header-content">
+    <text class="forget-header-icon">🛡️</text>
+    <view class="forget-title">密保验证</view>
+    <view class="forget-subtitle">回答密保问题以验证身份</view>
+  </view>
+</view>
+
+<!-- 进度提示 -->
+<view class="progress-tip">
+  <view class="progress-dot progress-done"></view>
+  <view class="progress-line progress-done-line"></view>
+  <view class="progress-dot progress-active"></view>
+  <view class="progress-line"></view>
+  <view class="progress-dot"></view>
+  <view class="progress-labels">
+    <text class="label-done">输入手机号</text>
+    <text class="label-active">密保验证</text>
+    <text class="label-pending">重置密码</text>
+  </view>
+</view>
+
+<block wx:for="{{info}}" wx:key="id">
+  <!-- 密保问题1 -->
+  <view class="mibao-card">
+    <view class="mibao-header">
+      <text class="mibao-emoji">🔑</text>
+      <text class="mibao-title">密保问题 1</text>
+    </view>
+    <view class="question-text">{{item.question1}}</view>
+    <view class="answer-input-group">
+      <view class="answer-input-row">
+        <text class="answer-icon">💡</text>
+        <input bindinput="inputvalues1" type="text" placeholder="请输入答案" class="input-field" placeholder-class="placeholder-style" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 密保问题2 -->
+  <view class="mibao-card">
+    <view class="mibao-header">
+      <text class="mibao-emoji">🔑</text>
+      <text class="mibao-title">密保问题 2</text>
+    </view>
+    <view class="question-text">{{item.question2}}</view>
+    <view class="answer-input-group">
+      <view class="answer-input-row">
+        <text class="answer-icon">💡</text>
+        <input bindinput="inputvalues2" type="text" placeholder="请输入答案" class="input-field" placeholder-class="placeholder-style" />
+      </view>
+    </view>
+  </view>
+</block>
+
+<!-- 验证按钮 -->
+<button class="submit-btn" bindtap="yanzheng">
+  <text class="submit-btn-text">验证身份</text>
+</button>

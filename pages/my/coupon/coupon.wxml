@@ -1,0 +1,60 @@
+<!--pages/my/coupon/coupon.wxml-->
+<view class="coupon-center">
+  <!-- 顶部横幅 -->
+  <view class="banner">
+    <view class="banner-bg"></view>
+    <view class="banner-content">
+      <text class="banner-title">🎁 领券中心</text>
+      <text class="banner-sub">优惠多多 · 美味不贵</text>
+    </view>
+  </view>
+
+  <!-- 我的优惠券入口 -->
+  <view class="my-coupon-entry" bind:tap="goMyCoupon">
+    <view class="entry-left">
+      <text class="entry-icon">🎫</text>
+      <text class="entry-text">我的优惠券</text>
+      <view class="entry-badge" wx:if="{{myCouponCount > 0}}">{{myCouponCount}}</view>
+    </view>
+    <text class="entry-arrow">›</text>
+  </view>
+
+  <!-- 可领取优惠券列表 -->
+  <view class="section-title">
+    <text class="title-text">🔥 可领取优惠券</text>
+  </view>
+
+  <view class="coupon-list" wx:if="{{couponList.length > 0}}">
+    <view class="coupon-card {{item.claimed ? 'claimed' : ''}}" wx:for="{{couponList}}" wx:key="_id">
+      <!-- 左侧金额区域 -->
+      <view class="coupon-left">
+        <view class="coupon-amount">
+          <text class="amount-unit">¥</text>
+          <text class="amount-num">{{item.money}}</text>
+        </view>
+        <text class="coupon-condition">满{{item.condition || 20}}元可用</text>
+      </view>
+      <!-- 虚线分隔 -->
+      <view class="coupon-divider">
+        <view class="divider-circle top"></view>
+        <view class="divider-line"></view>
+        <view class="divider-circle bottom"></view>
+      </view>
+      <!-- 右侧信息区域 -->
+      <view class="coupon-right">
+        <text class="coupon-name">{{item.name}}</text>
+        <text class="coupon-time">有效期至 {{item.year}}.{{item.month}}.{{item.day}}</text>
+        <view class="coupon-btn {{item.claimed ? 'btn-disabled' : ''}}" bind:tap="claimCoupon" data-index="{{index}}" data-id="{{item._id}}">
+          {{item.claimed ? '已领取' : '立即领取'}}
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{couponList.length === 0 && loaded}}">
+    <text class="empty-icon">🎫</text>
+    <text class="empty-text">暂时没有可领取的优惠券</text>
+    <text class="empty-sub">敬请期待更多优惠活动～</text>
+  </view>
+</view>

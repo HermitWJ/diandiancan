@@ -1,0 +1,21 @@
+<!--pages/suggest/suggest.wxml-->
+<view class="fb_main">
+    <view class="fb_title">餐厅选择</view>
+    <view class="fb_tips">
+        <text>第一餐厅</text>
+        <text>第二餐厅</text>
+        <text>第三餐厅</text>
+        <text>第四餐厅</text>
+        <text>第五餐厅</text>
+        <text>民族餐厅</text>
+    </view>
+    <view class="fb_content">
+        <textarea placeholder="请描述一下你的问题"></textarea>
+        <view class="fb_tool">
+            <button>+</button>
+        </view> 
+    </view>
+    <view class="form_btn_wrap">
+    <button type="warn">提交</button>
+    </view>
+</view>

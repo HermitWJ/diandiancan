@@ -1,0 +1,3 @@
+<!--pages/my/setup/setup.wxml-->
+<text bindtap="loginout">退出登录</text>
+<image src="{{UserInfo.avatarUrl?UserInfo.avatarUrl:'/images/avatar-default.jpg'}}" mode=""/>

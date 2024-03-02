@@ -1,0 +1,37 @@
+<!-- 顶部装饰 -->
+<view class="forget-header">
+  <view class="forget-header-bg"></view>
+  <view class="forget-header-content">
+    <text class="forget-header-icon">🔐</text>
+    <view class="forget-title">找回密码</view>
+    <view class="forget-subtitle">验证手机号以重置密码</view>
+  </view>
+</view>
+
+<!-- 主体卡片 -->
+<view class="main-card">
+  <view class="card-title-row">
+    <text class="card-icon">📱</text>
+    <text class="card-title">输入注册手机号</text>
+  </view>
+  <view class="card-desc">请输入注册时使用的手机号码，我们将通过密保问题验证你的身份</view>
+
+  <view class="input-group">
+    <view class="input-row">
+      <text class="input-prefix">+86</text>
+      <view class="input-separator"></view>
+      <input type="number" bindinput="inputvalues" placeholder="请输入手机号" class="input-field" placeholder-class="placeholder-style" maxlength="11" />
+    </view>
+  </view>
+
+  <button class="submit-btn" bindtap="toMibao">
+    <text class="submit-btn-text">下一步</text>
+    <text class="submit-btn-arrow">→</text>
+  </button>
+</view>
+
+<!-- 底部提示 -->
+<view class="help-section">
+  <text class="help-icon">💡</text>
+  <text class="help-text">如果忘记了手机号，请联系管理员处理</text>
+</view>

@@ -1,0 +1,80 @@
+<!-- 顶部装饰 -->
+<view class="reg-header">
+  <view class="reg-header-bg"></view>
+  <view class="reg-header-content">
+    <view class="reg-title">设置密保</view>
+    <view class="reg-subtitle">保护你的账号安全</view>
+  </view>
+</view>
+
+<!-- 步骤指示器 -->
+<view class="step-bar">
+  <view class="step-item">
+    <view class="step-circle step-done">✓</view>
+    <text class="step-label step-label-done">基本信息</text>
+  </view>
+  <view class="step-line step-line-active"></view>
+  <view class="step-item step-active">
+    <view class="step-circle">2</view>
+    <text class="step-label">设置密保</text>
+  </view>
+</view>
+
+<!-- 安全提示 -->
+<view class="security-tip">
+  <text class="security-icon">🛡️</text>
+  <text class="security-text">密保问题用于找回密码，请妥善保管答案</text>
+</view>
+
+<!-- 密保表单 -->
+<form bindsubmit="register">
+  <!-- 密保1 -->
+  <view class="mibao-card">
+    <view class="mibao-header">
+      <text class="mibao-num">密保 1</text>
+      <text class="mibao-badge">必填</text>
+    </view>
+    <view class="mibao-input-group">
+      <view class="input-row">
+        <text class="input-emoji">❓</text>
+        <input name="question1" type="text" placeholder="请输入你的密保问题" class="input-field" placeholder-class="placeholder-style" />
+      </view>
+      <view class="input-divider"></view>
+      <view class="input-row">
+        <text class="input-emoji">💡</text>
+        <input name="answer1" type="text" placeholder="请输入答案" class="input-field" placeholder-class="placeholder-style" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 密保2 -->
+  <view class="mibao-card">
+    <view class="mibao-header">
+      <text class="mibao-num">密保 2</text>
+      <text class="mibao-badge">必填</text>
+    </view>
+    <view class="mibao-input-group">
+      <view class="input-row">
+        <text class="input-emoji">❓</text>
+        <input name="question2" type="text" placeholder="请输入你的密保问题" class="input-field" placeholder-class="placeholder-style" />
+      </view>
+      <view class="input-divider"></view>
+      <view class="input-row">
+        <text class="input-emoji">💡</text>
+        <input name="answer2" type="text" placeholder="请输入答案" class="input-field" placeholder-class="placeholder-style" />
+      </view>
+    </view>
+  </view>
+
+  <!-- 注册按钮 -->
+  <button class="submit-btn" form-type="submit">
+    <text class="submit-btn-text">完成注册</text>
+    <text class="submit-btn-icon">🎉</text>
+  </button>
+</form>
+
+<!-- 底部链接 -->
+<view class="bottom-link" bindtap="toLogin">
+  <text class="bottom-text">已有账号？</text>
+  <text class="bottom-highlight">去登录</text>
+</view>

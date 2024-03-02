@@ -1,0 +1,108 @@
+<view class="my-page">
+  <!-- 顶部个人信息区 -->
+  <view class="profile-header">
+    <view class="profile-bg"></view>
+    <view class="profile-content">
+      <view class="avatar-wrap">
+        <image src="{{user.avatarUrl?user.avatarUrl:'/images/avatar-default.jpg'}}" class="avatar-img"></image>
+        <view class="online-dot"></view>
+      </view>
+      <view class="user-info">
+        <text class="nickname">{{user.nickname?user.nickname:username}}</text>
+        <view class="verify-tag">
+          <text class="verify-icon">✓</text>
+          <text class="verify-text">{{ifname}}</text>
+        </view>
+      </view>
+    </view>
+    <!-- 统计数据条 -->
+    <view class="stats-bar">
+      <view class="stat-item" bind:tap="goPage" data-url="/pages/cart/cart">
+        <text class="stat-num">{{orderCount || 0}}</text>
+        <text class="stat-label">订单</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item" bind:tap="goPage" data-url="/pages/my/collect/collect">
+        <text class="stat-num">{{collectCount || 0}}</text>
+        <text class="stat-label">收藏</text>
+      </view>
+      <view class="stat-divider"></view>
+      <view class="stat-item" bind:tap="goPage" data-url="/pages/my/mycoupon/mycoupon">
+        <text class="stat-num">{{couponCount || 0}}</text>
+        <text class="stat-label">优惠券</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 快捷功能区 -->
+  <view class="quick-actions">
+    <view class="action-card" bind:tap="goPage" data-url="/pages/my/randomeat1/randomeat1">
+      <view class="action-icon-wrap" style="background: linear-gradient(135deg, #ff6b35, #f7c948);">
+        <text class="action-emoji">🎲</text>
+      </view>
+      <text class="action-name">随机选饭</text>
+      <text class="action-desc">选择困难症终结者</text>
+    </view>
+    <view class="action-card" bind:tap="goPage" data-url="/pages/my/coupon/coupon">
+      <view class="action-icon-wrap" style="background: linear-gradient(135deg, #ff4757, #ff6b81);">
+        <text class="action-emoji">🎫</text>
+      </view>
+      <text class="action-name">领券中心</text>
+      <text class="action-desc">优惠多多不错过</text>
+    </view>
+    <view class="action-card" bind:tap="goPage" data-url="/pages/my/collect/collect">
+      <view class="action-icon-wrap" style="background: linear-gradient(135deg, #e74c3c, #e08283);">
+        <text class="action-emoji">⭐</text>
+      </view>
+      <text class="action-name">菜品收藏</text>
+      <text class="action-desc">你的心头肉</text>
+    </view>
+    <view class="action-card" bind:tap="goPage" data-url="/pages/my/mycoupon/mycoupon">
+      <view class="action-icon-wrap" style="background: linear-gradient(135deg, #3867d6, #6c9df8);">
+        <text class="action-emoji">🎁</text>
+      </view>
+      <text class="action-name">我的优惠券</text>
+      <text class="action-desc">省钱小能手</text>
+    </view>
+  </view>
+
+  <!-- 服务功能列表 -->
+  <view class="service-panel">
+    <view class="panel-title">
+      <text class="panel-title-text">常用服务</text>
+    </view>
+    <view class="service-list">
+      <navigator class="service-item" url="/pages/my/customerservice/customerservice">
+        <view class="service-left">
+          <text class="service-emoji">💬</text>
+          <text class="service-name">联系客服</text>
+        </view>
+        <text class="service-arrow">›</text>
+      </navigator>
+      <navigator class="service-item" url="/pages/my/idea/idea">
+        <view class="service-left">
+          <text class="service-emoji">💡</text>
+          <text class="service-name">意见反馈</text>
+        </view>
+        <text class="service-arrow">›</text>
+      </navigator>
+      <navigator class="service-item" url="/pages/my/setup/setup">
+        <view class="service-left">
+          <text class="service-emoji">⚙️</text>
+          <text class="service-name">设置管理</text>
+        </view>
+        <text class="service-arrow">›</text>
+      </navigator>
+    </view>
+  </view>
+
+  <!-- 登录/退出按钮 -->
+  <view class="auth-section">
+    <view class="auth-btn login-btn" wx:if="{{!user}}" bind:tap="toLogin">
+      <text>注册 / 登录</text>
+    </view>
+    <view class="auth-btn logout-btn" wx:if="{{user}}" bind:tap="loginout">
+      <text>退出登录</text>
+    </view>
+  </view>
+</view>
