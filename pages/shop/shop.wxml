@@ -1,0 +1,77 @@
+<!-- 购物页面 - 全新设计 -->
+<wxs src="../../utils/num_str.wxs" module="num_str"/>
+
+<view class="shop-page">
+
+  <!-- 顶部搜索栏 -->
+  <view class="search-header">
+    <view class="search-bar">
+      <text class="bar-icon">🔍</text>
+      <input
+        bindinput="handleInput"
+        bindconfirm="handleConfirm"
+        type="text"
+        value="{{inputValue}}"
+        placeholder="{{placeholder}}"
+        class="search-input"
+        confirm-type="search"
+      />
+      <view wx:if="{{inputValue}}" class="search-clear" bindtap="handleDeleteClick">✕</view>
+    </view>
+    <view wx:if="{{inputValue}}" bindtap="handleTextbtnClick" class="cancel-btn">取消</view>
+  </view>
+
+  <!-- 分类横向滚动标签 -->
+  <scroll-view scroll-x class="category-scroll" wx:if="{{categoryList.length > 0}}">
+    <view class="category-item {{selectedCategory === '' ? 'cat-active' : ''}}" bindtap="onCategoryTap" data-cat="">
+      <text>全部</text>
+    </view>
+    <view class="category-item {{selectedCategory === item ? 'cat-active' : ''}}" wx:for="{{categoryList}}" wx:key="*this" bindtap="onCategoryTap" data-cat="{{item}}">
+      <text>{{item}}</text>
+    </view>
+  </scroll-view>
+
+  <!-- 加载中 -->
+  <view class="loading-area" wx:if="{{isLoading}}">
+    <view class="loading-spinner"></view>
+    <text class="loading-text">加载中...</text>
+  </view>
+
+  <!-- 搜索结果统计 -->
+  <view class="result-bar" wx:if="{{!isLoading && showResult}}">
+    <text class="result-text">共 <text class="result-num">{{filteredGoods.length}}</text> 个菜品</text>
+  </view>
+
+  <!-- 菜品列表 -->
+  <view class="goods-list" wx:if="{{!isLoading}}">
+    <view class="goods-card" wx:for="{{filteredGoods}}" wx:key="_id" bindtap="toDetails" data-id="{{item._id}}">
+      <view class="goods-img-wrap">
+        <image src="{{item.cover}}" mode="aspectFill" class="goods-img" />
+        <view class="goods-badge" wx:if="{{item.StoreName}}">{{item.StoreName}}</view>
+      </view>
+      <view class="goods-info">
+        <text class="goods-name">{{item.dishname}}</text>
+        <text class="goods-desc">{{item.details || '美味等你来发现~'}}</text>
+        <view class="goods-footer">
+          <view class="goods-price">
+            <text class="price-sign">¥</text>
+            <text class="price-val">{{num_str.toFixedString(item.price)}}</text>
+          </view>
+          <view class="goods-go-btn">
+            <text>去看看 ›</text>
+          </view>
+        </view>
+      </view>
+    </view>
+  </view>
+
+  <!-- 空状态 -->
+  <view class="empty-state" wx:if="{{!isLoading && filteredGoods.length === 0}}">
+    <text class="empty-icon">🍽️</text>
+    <text class="empty-title">没有找到相关菜品</text>
+    <text class="empty-sub">试试其他关键词或分类</text>
+  </view>
+
+  <!-- 底部安全区 -->
+  <view style="height: 40rpx;"></view>
+</view>
